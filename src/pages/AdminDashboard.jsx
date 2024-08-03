@@ -3,7 +3,7 @@ import { UserContext } from '../UserContext';
 import TotalAgents from '../components/Dashboard/TotalAgents';
 import Data from './../../db.json'
 import ChartBar from '../components/Dashboard/ChartBar';
-import Employee from '../components/Employee/Employee';
+// import Employee from '../components/Employee/Employee';
 
 function AdminDashboard() {
   const { role, user, logoutUser } = useContext(UserContext);
@@ -47,7 +47,7 @@ function AdminDashboard() {
         </div>
       </div>
       <div className="w-1/2 h-full overflow-hidden p-4 bg-white border rounded-xl shadow-custom-light">
-          <Employee/>
+          {/* <Employee/> */}
       </div>
     </div>
     </>

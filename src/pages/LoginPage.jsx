@@ -16,7 +16,7 @@ function LoginPage() {
     try {
       console.log(`Attempting to log in with username: ${username} and password: ${password}`);
       // Obtenez l'utilisateur par nom d'utilisateur
-      const response = await axios.get(`http://localhost:5000/users?username=${username}`);
+      const response = await axios.get(`http://localhost:3000/users?username=${username}`);
       console.log('Response:', response);
       if (response.data.length > 0) {
         const user = response.data[0];
