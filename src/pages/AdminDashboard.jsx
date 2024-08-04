@@ -3,6 +3,7 @@ import { UserContext } from '../UserContext';
 import TotalAgents from '../components/Dashboard/TotalAgents';
 import Data from './../../db.json'
 import ChartBar from '../components/Dashboard/ChartBar';
+import AllAgents from '../components/AllAgents';
 // import Employee from '../components/Employee/Employee';
 
 function AdminDashboard() {
@@ -48,6 +49,8 @@ function AdminDashboard() {
       </div>
       <div className="w-1/2 h-full overflow-hidden p-4 bg-white border rounded-xl shadow-custom-light">
           {/* <Employee/> */}
+          {/* <AllAgents/> */}
+          en construction
       </div>
     </div>
     </>

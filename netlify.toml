@@ -1,8 +1,9 @@
 [build]
-  functions = "functions"
-  publish = "frontend/dist"
+  command = "npm run build"
+  publish = "build"
 
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/server"
-  status = 200
+[[plugins]]
+  package = "netlify-plugin-run-script"
+  [plugins.inputs]
+    # This runs the json-server on port 5000
+    run = "npm run serve-json"

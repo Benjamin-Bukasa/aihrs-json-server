@@ -4,6 +4,7 @@ import { UserContext } from '../UserContext';
 // import Employee from '../components/Employee';
 // import UploadFile from '../components/Dashboard/UploadFile';
 import { Link, Outlet, useParams } from 'react-router-dom';
+import AllAgents from '../components/AllAgents';
 // import Employee from '../components/Employee/Employee';
 
 function GlobalTracking() {
@@ -41,6 +42,7 @@ function GlobalTracking() {
       </div>
       <div className="w-full overflow-hidden">
         {/* <Employee/> */}
+        <AllAgents/>
       </div>
       <div className="">
         <Outlet/>

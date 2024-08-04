@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:8888/.netlify/functions/server',
+  baseURL: '/api', // cela redirigera vers json-server via le proxy configuré dans Netlify
 });
 
 export default api;
