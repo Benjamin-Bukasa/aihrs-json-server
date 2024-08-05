@@ -3,7 +3,6 @@
   publish = "build"
 
 [[plugins]]
-  package = "netlify-plugin-run-script"
+  package = "netlify-plugin-functions"
   [plugins.inputs]
-    # This runs the json-server on port 5000
-    run = "npm run serve-json"
+    path = "functions"

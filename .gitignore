@@ -1,15 +1,15 @@
-# Dependency directories
-node_modules/
-jspm_packages/
+# # Dependency directories
+# node_modules/
+# jspm_packages/
 
-# Optional npm cache directory
-.npm
+# # Optional npm cache directory
+# .npm
 
-# Optional REPL history
-.node_repl_history
+# # Optional REPL history
+# .node_repl_history
 
-# Output of 'npm pack'
-*.tgz
+# # Output of 'npm pack'
+# *.tgz
 
 
 # Logs
