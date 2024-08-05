@@ -65,7 +65,7 @@ const routes = [
   { path: '/first-time-password-reset', element: <AuthenticatedRoute element={<FirstTimePasswordResetPage />} /> },
   { path: '/search-results', element: <AuthenticatedRoute element={<SearchResults />} /> },
   { path: '/add-user', element: <AdminRoute element={<AddUserPage />} /> },
-  { path: '/user', element: <AdminRoute element={<User />} /> },
+  { path: '/:name', element: <AdminRoute element={<User />} /> },
 
 ];
 

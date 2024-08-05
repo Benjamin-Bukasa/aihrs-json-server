@@ -1,6 +1,7 @@
 import React from 'react';
 import Admin from '../components/Admin/Admin';
 import ChartBar from '../components/Dashboard/ChartBar';
+import UsersList from '../components/Admin/UsersList';
 
 function AdminPage() {
   return (
@@ -21,7 +22,7 @@ function AdminPage() {
         </div>
       </div>
       <div className="w-1/2 h-full overflow-hidden p-4 bg-white border rounded-xl shadow-custom-light">
-          {/* <Employee/> */}
+          <UsersList/>
       </div>
     </div>
     </>

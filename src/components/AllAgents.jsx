@@ -15,7 +15,7 @@ const { role, user, logoutUser } = useContext(UserContext);
 const [agents, setAgents] = useState ([])
 const dataApi = db.entries
 const data = dataApi.map((agent)=>(
-    [agent.id,agent.name,agent.gender, agent.function, agent.location, agent.dateOfAffectation, agent.status]
+    [agent.id,agent.name,agent.gender, agent.function, agent.location, agent.dateOfAffectation, agent.status,agent.name]
 ))
 const columns = [
     {
@@ -55,7 +55,7 @@ const columns = [
         options:{
             customBodyRender:(value)=>(
                 <p className='flex items-center justify-around gap-1'>
-                    <Link to=''><AiFillEye size={20} color='skyblue'/></Link>
+                    <Link to={`/${value}`}><AiFillEye size={20} color='skyblue'/></Link>
                     {user && user.role ==='admin'?<Link to=''><FaUserEdit size={15} color='green'/></Link>:""}
                     {user && user.role ==='admin'?<Link to=''><FaUserTimes size={15} color='red'/></Link>:""}
                 </p>
@@ -99,9 +99,9 @@ const options = {
   },[])
 
   return (
-    <div className='w-full h-full p-2'>
+    <div className='w-full h-full p-2 rounded-xl border bg-white shadow-custom-light'>
         <ThemeProvider theme={getMuiTheme()}>
-           {dataApi.length}
+           {/* {dataApi.length} */}
             <MUIDataTable
         title={"Liste des Agents MAD"}
         data={data}

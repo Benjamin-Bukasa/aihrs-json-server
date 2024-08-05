@@ -5,6 +5,7 @@ import Data from './../../db.json'
 import ChartBar from '../components/Dashboard/ChartBar';
 import AllAgents from '../components/AllAgents';
 // import Employee from '../components/Employee/Employee';
+import UploadFile from '../components/Dashboard/UploadFile'
 
 function AdminDashboard() {
   const { role, user, logoutUser } = useContext(UserContext);
@@ -50,7 +51,7 @@ function AdminDashboard() {
       <div className="w-1/2 h-full overflow-hidden p-4 bg-white border rounded-xl shadow-custom-light">
           {/* <Employee/> */}
           {/* <AllAgents/> */}
-          en construction
+          <UploadFile/>
       </div>
     </div>
     </>

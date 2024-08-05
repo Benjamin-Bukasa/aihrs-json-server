@@ -13,7 +13,7 @@ function Navbar({sidebarToggle, setSidebarToggle}) {
   const { user, logoutUser } = useContext(UserContext);
 
   return (
-    <nav className="w-full sticky bg-slate-500 text-white flex justify-between items-center  px-4 py-3 z-50">
+    <nav className="w-full sticky bg-slate-500 text-white flex justify-between items-center  px-4 py-3 ">
       <div className="flex justify-start items-center gap-4">
         <HiMenu size={25} className="cursor-pointer" onClick={()=>setSidebarToggle(!sidebarToggle)}/>
         <span className="text-[18px] font-semibold">Tableau de Bord</span>

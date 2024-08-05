@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
+import api from '../../api'
 
 
 function UploadFile() {
@@ -36,7 +37,7 @@ function UploadFile() {
       });
 
       try {
-        await axios.post('http://localhost:3001/employee', uniqueData);
+        await api.post('http://localhost:5000/entries', uniqueData);
         alert('Data successfully uploaded to db.json');
       } catch (error) {
         console.error('Error uploading data:', error);
@@ -47,8 +48,8 @@ function UploadFile() {
   };
 
   return (
-    <div className="h-full p-4 flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="h-full p-4 flex items-center justify-center bg-white">
+      <div className="bg-white p-8 rounded-lg shadow-custom-light w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Uploader un fichier Excel</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <input

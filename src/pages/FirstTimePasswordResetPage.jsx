@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
+import api from '../api';
 
 function FirstTimePasswordResetPage() {
   const { user, loginUser } = useContext(UserContext);
@@ -27,7 +28,7 @@ function FirstTimePasswordResetPage() {
     }
     try {
       console.log(`Fetching user: ${user.username}`);
-      const response = await axios.get(`http://localhost:5000/users?username=${user.username}`);
+      const response = await api.get(`http://localhost:5000/users?username=${user.username}`);
       console.log('Response:', response);
       if (response.data.length > 0) {
         const fetchedUser = response.data[0];
