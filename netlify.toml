@@ -1,19 +1,8 @@
 [build]
-  publish = "build"
+  publish = "dist"
   command = "npm run build"
 
-[[plugins]]
-  package = "netlify-plugin-inline-functions-env"
-  [plugins.inputs]
-    port = 5000
-    db_file = "./db.json"
-
-[dev]
-  command = "npm run dev"
-  port = 5000
-  targetPort = 5000
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api"
+  status = 200
