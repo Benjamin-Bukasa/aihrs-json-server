@@ -13,6 +13,10 @@ const isHolidayInDRC = (date) => {
     "08-01", // Fête des Parents
     "12-25", // Noël
     "12-31", // Réveillon
+    "06-05", // Kimbangu
+    "05-17", // liberation AFDL
+    "01-17", // Lumumba
+    "01-16", // Laurent Kabila
   ];
   const formattedDate = new Date(date).toISOString().slice(5, 10);
   return holidays.includes(formattedDate);
