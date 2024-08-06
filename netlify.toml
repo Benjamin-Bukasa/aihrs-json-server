@@ -1,8 +1,9 @@
 [build]
-  command = "npm run build"
   publish = "build"
+  command = "npm run build"
 
 [[plugins]]
-  package = "netlify-plugin-functions"
+  package = "netlify-plugin-json-server"
   [plugins.inputs]
-    path = "functions"
+    port = 3000
+    db_file = "./db.json"  # Spécifiez le chemin vers votre fichier db.json
