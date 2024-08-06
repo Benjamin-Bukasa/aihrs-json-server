@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
-import api from '../../api'
+import api from '../../../Nelify/functions/api'
 
 
 function UploadFile() {

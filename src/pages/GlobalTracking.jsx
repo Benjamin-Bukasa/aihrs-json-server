@@ -6,7 +6,7 @@ import { UserContext } from '../UserContext';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import AllAgents from '../components/AllAgents';
 // import Employee from '../components/Employee/Employee';
-import api from '../api';
+import api from '../../Nelify/functions/api'
 
 function GlobalTracking() {
   const { user } = useContext(UserContext);

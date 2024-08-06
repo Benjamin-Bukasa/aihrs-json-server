@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { MdClose } from "react-icons/md";
-import api from "../../api";
+import api from '../../../Nelify/functions/api'
 
 const ModalAddUser = ({ visible, onClose, onAddUser }) => {
   const [formData, setFormData] = useState({

@@ -11,3 +11,4 @@ const handler = (req, res) => {
 };
 
 module.exports = { handler };
+export default api;

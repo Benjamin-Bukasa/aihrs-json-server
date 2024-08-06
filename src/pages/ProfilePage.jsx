@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 // import axios from 'axios';
-import api from '../api';
+import api from '../../Nelify/functions/api'
 import { UserContext } from '../UserContext';
 
 function ProfilePage() {

@@ -1,7 +1,5 @@
-// src/components/Navbar.jsx
 import React from 'react';
 import { HiMenu } from 'react-icons/hi';
-import Search from './Search';
 import { GoBellFill } from 'react-icons/go';
 import { FaUserCircle } from 'react-icons/fa';
 import { UserContext } from '../UserContext';
@@ -19,7 +17,7 @@ function Navbar({sidebarToggle, setSidebarToggle}) {
         <span className="text-[18px] font-semibold">Tableau de Bord</span>
       </div>
       <div className="flex items-center justify-between gap-x-5">
-            {/* <Search/> */}
+           
             <div className="relative flex items-center">
 
               <button className="group">

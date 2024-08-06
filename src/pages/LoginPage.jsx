@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 // import axios from 'axios';
-import api from '../api';
+import api from '../../Nelify/functions/api'
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 import { Link } from 'react-router-dom';
