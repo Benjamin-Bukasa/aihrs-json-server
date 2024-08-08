@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import ModalAddUser from './ModalAddUser'; // Assurez-vous que le chemin est correct
-import api from '../../api';
 const UsersList = ({ currentUser }) => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,7 +10,7 @@ const UsersList = ({ currentUser }) => {
 
   const fetchUsers = async () => {
     try {
-      const response = await api.get('http://localhost:5000/users');
+      const response = await axios.get('http://localhost:5000/users');
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users', error);
@@ -32,7 +31,7 @@ const UsersList = ({ currentUser }) => {
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`http://localhost:5000/users/${id}`);
+      await axios.delete(`http://localhost:5000/users/${id}`);
       setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
       console.error('Error deleting user', error);

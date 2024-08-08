@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import db from '../../db.json'
 import { FaUserTie } from "react-icons/fa6";
-import table from 'autotable/lib/table';
+// import table from 'autotable/lib/table';
 
 function User() {
 

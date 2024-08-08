@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-// import axios from 'axios';
-// import api from '../api'
+import axios from 'axios';
 import { UserContext } from '../UserContext';
-import apiClient from '../api';
 
 function ProfilePage() {
   const { user, loginUser } = useContext(UserContext);
@@ -24,13 +22,13 @@ function ProfilePage() {
       return;
     }
     try {
-      const response = await apiClient.get(`http://localhost:5000/users?username=${user.username}&password=${currentPassword}`);
+      const response = await axios.get(`http://localhost:5000/users?username=${user.username}&password=${currentPassword}`);
       if (response.data.length > 0) {
         const updatedUser = response.data[0];
         updatedUser.username = username;
         updatedUser.password = newPassword || updatedUser.password;
 
-        await apiClient.put(`http://localhost:5000/users/${updatedUser.id}`, updatedUser);
+        await axios.put(`http://localhost:5000/users/${updatedUser.id}`, updatedUser);
         loginUser(updatedUser, true); // Update context and persist in local storage
         alert('Profile updated successfully');
       } else {

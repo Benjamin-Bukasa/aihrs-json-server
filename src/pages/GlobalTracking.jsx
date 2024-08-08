@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../UserContext';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import AllAgents from '../components/AllAgents';
-import apiClient from '../api';
+// import apiClient from '../api';
+import axios from 'axios';
+
 
 function GlobalTracking() {
   const { user } = useContext(UserContext);
@@ -12,7 +14,7 @@ function GlobalTracking() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient.get('http://localhost:5000/entries');
+        const response = await axios.get('http://localhost:5000/entries');
         setData(response.data);
       } catch (error) {
         console.error('Error fetching global tracking data', error);

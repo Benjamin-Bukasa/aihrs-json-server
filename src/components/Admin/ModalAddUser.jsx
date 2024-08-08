@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { MdClose } from "react-icons/md";
-import apiClient from '../../api'
+
 
 const ModalAddUser = ({ visible, onClose, onAddUser }) => {
   const [formData, setFormData] = useState({
@@ -41,7 +41,7 @@ const ModalAddUser = ({ visible, onClose, onAddUser }) => {
     }
 
     try {
-      await apiClient.post('http://localhost:5000/users', {
+      await axios.post('http://localhost:5000/users', {
         username: formData.username,
         firstName: formData.firstName,
         lastName: formData.lastName,

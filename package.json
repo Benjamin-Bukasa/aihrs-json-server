@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "server": "json-server --watch db.json --port 5000",
     "lambda-build": "netlify-lambda build functions",
-    "start": "npm run serve & npm run serve-json"
+    "start": "npm run server & npm run json-server"
   },
   "dependencies": {
     "@emotion/react": "^11.13.0",

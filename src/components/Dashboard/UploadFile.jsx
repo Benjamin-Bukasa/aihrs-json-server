@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
-import api from '../../api'
 
 
 function UploadFile() {
@@ -37,7 +36,7 @@ function UploadFile() {
       });
 
       try {
-        await api.post('http://localhost:5000/entries', uniqueData);
+        await axios.post('http://localhost:5000/entries', uniqueData);
         alert('Data successfully uploaded to db.json');
       } catch (error) {
         console.error('Error uploading data:', error);
