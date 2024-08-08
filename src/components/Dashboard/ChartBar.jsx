@@ -8,9 +8,9 @@ import { format } from 'date-fns';
 
 const ChartBar = () => {
 
-const data = Data.employee
-const dataAnneePassee = data.filter((employee)=>employee.dateEntreeAihrs.annee === 2023)
-const dataAnneeEnCours = data.filter((employee)=>employee.dateEntreeAihrs.annee === 2024)
+const data = Data.entries
+const dataAnneePassee = data.filter((employee)=>employee.annee === 2023)
+const dataAnneeEnCours = data.filter((employee)=>employee.annee === 2024)
 const totalAnneePassee = dataAnneePassee.length
 const totalAnneeEnCours = dataAnneeEnCours.length
 

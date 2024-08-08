@@ -9,7 +9,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "server": "json-server --watch db.json --port 5000",
-    "lambda-build": "netlify-lambda build functions"
+    "lambda-build": "netlify-lambda build functions",
+    "start": "npm run serve & npm run serve-json"
   },
   "dependencies": {
     "@emotion/react": "^11.13.0",

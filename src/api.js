@@ -1,7 +1,11 @@
 import axios from 'axios';
+import API_URL from './config';
 
-const api = axios.create({
-  baseURL: '/api', // cela redirigera vers json-server via le proxy configuré dans Netlify
+const apiClient = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
-export default api;
+export default apiClient;

@@ -12,18 +12,7 @@ const Notification = () => {
         <span className="">Mes Notifications</span> 
       </h3>
       <div className="w-full h-60 justify-center items-center gap-0 px-0 py-0 divide-y z-10">
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
-            <p className="w-full text-center font-light italic py-5">Pas de nouvelle notification</p>
+            
       </div>
     </div>
   )

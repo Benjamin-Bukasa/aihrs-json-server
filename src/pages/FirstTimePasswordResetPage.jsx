@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
-import api from '../../Nelify/functions/api'
+import apiClient from '../api'
 
 function FirstTimePasswordResetPage() {
   const { user, loginUser } = useContext(UserContext);

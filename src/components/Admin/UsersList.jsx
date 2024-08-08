@@ -3,7 +3,6 @@ import axios from 'axios';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import ModalAddUser from './ModalAddUser'; // Assurez-vous que le chemin est correct
 import api from '../../api';
-
 const UsersList = ({ currentUser }) => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');

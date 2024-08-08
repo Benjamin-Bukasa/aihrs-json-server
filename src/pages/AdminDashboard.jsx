@@ -11,12 +11,12 @@ function AdminDashboard() {
   const { role, user, logoutUser } = useContext(UserContext);
   const displayRole = role === 'admin' ? 'Administrateur': 'Utilisateur'
 
-  const data = Data.employee
-  const dataKinshasa = Data.employee.filter(agent=>agent.lieuAffectation ==="Kinshasa")
+  const data = Data.entries
+  const dataKinshasa = Data.entries.filter(agent=>agent.lieuAffectation ==="Kinshasa")
   const dataKinshasaLenght = dataKinshasa.length
-  const dataProvince = Data.employee.filter(agent=>agent.lieuAffectation !=="Kinshasa")
+  const dataProvince = Data.entries.filter(agent=>agent.lieuAffectation !=="Kinshasa")
   const dataProvinceLength = dataProvince.length
-  const dataInactif = Data.employee.filter(agent=>agent.status ===false)
+  const dataInactif = Data.entries.filter(agent=>agent.status ===false)
   const dataAgentInactif = dataInactif.length
 
   return (
@@ -49,8 +49,6 @@ function AdminDashboard() {
         </div>
       </div>
       <div className="w-1/2 h-full overflow-hidden p-4 bg-white border rounded-xl shadow-custom-light">
-          {/* <Employee/> */}
-          {/* <AllAgents/> */}
           <UploadFile/>
       </div>
     </div>
