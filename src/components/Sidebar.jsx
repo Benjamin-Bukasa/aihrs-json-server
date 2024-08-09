@@ -9,6 +9,7 @@ import { FaUsers } from "react-icons/fa";
 import { FaUserCog } from "react-icons/fa";
 import { MdSupervisedUserCircle } from "react-icons/md";
 import { GoBellFill } from "react-icons/go";
+import { MdFolderShared } from "react-icons/md";
 
 function Sidebar({sidebarToggle}) {
   const { user } = useContext(UserContext);
@@ -18,6 +19,7 @@ function Sidebar({sidebarToggle}) {
       <h1 className="text-xl text-orange-400 font-bold py-3 px-4">AIHRS Outsourcing</h1>
       <ul>
         <li className="py-4 px-4 hover:bg-slate-50/20 hover:text-white font-semibold text-[15px]"><Link to={user?.role === 'admin' ? '/admin-dashboard' : '/dashboard'} className="flex justify-start items-center gap-5"><GoHomeFill size={25}/>Dashboard</Link></li>
+        <li className="py-4 px-4 hover:bg-slate-50/20 hover:text-white font-semibold text-[15px]"><Link to={user?.role === 'admin' ? '/admin-dashboard' : '/dashboard'} className="flex justify-start items-center gap-5"><MdFolderShared size={25}/>Mon Portefeuille</Link></li>
         <li className="py-4 px-4 hover:bg-slate-50/20 hover:text-white font-semibold text-[15px]"><Link to="/global-tracking" className="flex justify-start items-center gap-5"><FaTachometerAlt size={25}/>Suivi Global</Link></li>
         <li className="py-4 px-4 hover:bg-slate-50/20 hover:text-white font-semibold text-[15px]"><Link to="/pointage" className="flex justify-start items-center gap-5"><FaFilePowerpoint size={25}/>Pointage</Link></li>
         {/* <li className="py-4 px-4 hover:bg-slate-50/20 hover:text-white font-semibold text-[15px]"><Link to="/report" className="flex justify-start items-center gap-5"><FaClipboardList size={25}/>Report</Link></li> */}

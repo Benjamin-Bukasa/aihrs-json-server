@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 import { Link } from 'react-router-dom';
+import logo from '../images/logo.png'
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -11,6 +12,7 @@ function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const { loginUser } = useContext(UserContext);
   const navigate = useNavigate();
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,11 +45,16 @@ function LoginPage() {
     }
   };
 
+
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-    <form onSubmit={handleSubmit} className="lg:w-1/4 lg:h-2/4 sm:w-2/4 sm:h-2/3 flex flex-col justify-around items-start gap-1 p-5 bg-white text-slate-600 font-semibold text-[16px] rounded-3xl shadow-custom-light border">
-      <h3 className="text-orange-500 font-extrabold text-3xl">Connectez-vous</h3>
-      <div className="w-full flex flex-col justify-start items-start gap-1 p-1">
+    <div className="absolute left-0 w-full z-60  h-screen flex justify-center items-center">
+    <form onSubmit={handleSubmit} className="w-1/4  lg:w-1/4 lg:h-3/4 sm:w-2/4 sm:h-2/3 flex flex-col justify-around items-start gap-1 p-5 bg-white text-slate-600 font-semibold text-[16px] rounded-3xl shadow-custom-light border">
+      
+      <div className="w-full flex justify-center">
+        <img src={logo} alt="" className='w-1/2'/>
+      </div>
+      <h3 className="w-full text-orange-500 font-bold text-2xl text-center py-3">Connectez-vous</h3>
+      <div className="w-full flex flex-col justify-start items-start gap-1 p-1 my-4">
         <label htmlFor="" className="">Nom d'utilisateur</label>
         <input value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -68,9 +75,9 @@ function LoginPage() {
       </div>
       <p className="w-full py-2 px-2 flex items-center justify-center gap-2">
         Mot de passe oublié ?
-        <Link to="/reset-password">
-        <span className="text-orange-500 font-medium underline underline-offset-1 cursor-pointer">Signaler</span>
-        </Link> 
+        
+        <span className="text-orange-500 font-medium ">Contactez l'administrateur</span>
+        
       </p>
     </form>
     </div>

@@ -103,7 +103,7 @@ const options = {
         <ThemeProvider theme={getMuiTheme()}>
            {/* {dataApi.length} */}
             <MUIDataTable
-        title={"Liste des Agents MAD"}
+        title={"Tous les Agents MAD"}
         data={data}
         columns={columns}
         options={options}

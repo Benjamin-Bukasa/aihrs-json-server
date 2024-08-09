@@ -49,7 +49,7 @@ function UploadFile() {
   return (
     <div className="h-full p-4 flex items-center justify-center bg-white">
       <div className="bg-white p-8 rounded-lg shadow-custom-light w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Uploader un fichier Excel</h1>
+        <h1 className="text-2xl font-semibold mb-6 text-center">Uploader un fichier Excel</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <input
             type="file"

@@ -68,9 +68,9 @@ const ModalAddUser = ({ visible, onClose, onAddUser }) => {
     <div
       id="container"
       onClick={handleClose}
-      className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 sm:h-full shadow-custom z-30 flex justify-center items-center ease-in-out"
+      className="fixed inset-[-10%] m-auto backdrop-blur-sm bg-black bg-opacity-60 sm:h-full shadow-custom z-30 flex justify-center items-center ease-in-out"
     >
-      <div className="lg:w-2/4 sm:w-3/4 sm:h-[90%] md:h-[70%] flex flex-col md:justify-around sm:justify-around gap-1 bg-white rounded-lg shadow-custom-light p-4">
+      <div className=" flex flex-col h-3/4 gap-1 bg-white rounded-lg shadow-custom-light p-4">
         <div className="w-full flex justify-end items-center px-0 py-2 ">
           <button
             onClick={onClose}
