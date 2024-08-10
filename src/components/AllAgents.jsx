@@ -15,7 +15,7 @@ const { role, user, logoutUser } = useContext(UserContext);
 const [agents, setAgents] = useState ([])
 const dataApi = db.entries
 const data = dataApi.map((agent)=>(
-    [agent.id,agent.name,agent.gender, agent.function, agent.location, agent.dateOfAffectation, agent.status,agent.name]
+    [agent.id,agent.name,agent.gender, agent.function, agent.company, agent.location, agent.dateOfAffectation, agent.status,agent.name]
 ))
 const columns = [
     {
@@ -31,6 +31,10 @@ const columns = [
     },
     {
         name:"Fonction",
+
+    },
+    {
+        name:"Enteprise",
 
     },
     {

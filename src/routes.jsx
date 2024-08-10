@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useContext } from 'react';
 import LoginPage from './pages/LoginPage';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
@@ -16,15 +15,26 @@ import SearchResults from './pages/SearchResults';
 import AddUserPage from './pages/AddUserPage';
 import User from './pages/User';
 import { UserContext } from './UserContext';
-
+import Infos from './components/UserInfos/Infos';
+import Contract from './components/UserInfos/Contract';
 
 function AuthenticatedRoute({ element }) {
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
+
+  if (loading) {
+    return <div>Loading...</div>; // Indicateur de chargement pendant la vérification de l'authentification
+  }
+
   return user ? element : <Navigate to="/login" />;
 }
 
 function AdminRoute({ element }) {
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
+
+  if (loading) {
+    return <div>Loading...</div>; // Indicateur de chargement pendant la vérification de l'authentification
+  }
+
   return user && user.role === 'admin' ? element : <Navigate to="/login" />;
 }
 
@@ -33,29 +43,7 @@ const routes = [
   { path: '/login', element: <LoginPage /> },
   { path: '/dashboard', element: <AuthenticatedRoute element={<UserDashboard />} /> },
   { path: '/admin-dashboard', element: <AdminRoute element={<AdminDashboard />} /> },
-  { path: '/global-tracking', element: <AuthenticatedRoute element={<GlobalTracking />} />, 
-  children:[
-    {
-      path:'/global-tracking/:id',
-      element:<User/>
-    },
-    {
-      path:'/global-tracking/indicateur',
-      element:"Hello world",
-    },
-    {
-      path:'/global-tracking/absence',
-      element:"Hello world",
-    },
-    {
-      path:'/global-tracking/Effectif',
-      element:"Hello world",
-    },
-    {
-      path:'/global-tracking/singleEmployee',
-      element:"Hello world",
-    },
-  ] },
+  { path: '/global-tracking', element: <AuthenticatedRoute element={<GlobalTracking />} /> },
   { path: '/pointage', element: <AuthenticatedRoute element={<Pointage />} /> },
   { path: '/admin', element: <AdminRoute element={<AdminPage />} /> },
   { path: '/report', element: <AuthenticatedRoute element={<Report />} /> },
@@ -65,8 +53,32 @@ const routes = [
   { path: '/first-time-password-reset', element: <AuthenticatedRoute element={<FirstTimePasswordResetPage />} /> },
   { path: '/search-results', element: <AuthenticatedRoute element={<SearchResults />} /> },
   { path: '/add-user', element: <AdminRoute element={<AddUserPage />} /> },
-  { path: '/:name', element: <AdminRoute element={<User />} /> },
-
+  { 
+    path: '/:name',
+    element: <AdminRoute element={<User />} />,
+    children:[
+      {
+        path: '/:name',
+        element: <Infos />,
+      },
+      {
+        path: '/:name/infos',
+        element: <Infos />,
+      },
+      {
+        path: '/:name/contract',
+        element: <Contract/>,
+      },
+      {
+        path: '/:name/pointage',
+        element: '',
+      },
+      {
+        path: '/:name/report',
+        element: '',
+      },
+    ]
+  },
 ];
 
 export default routes;

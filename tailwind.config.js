@@ -12,6 +12,7 @@ export default {
       },
       fontFamily:{
         raleway:['raleway','sans-serif'],
+        poppins:['poppins','sans-serif'],
       },
       screens: {
         'sm': '300px',
