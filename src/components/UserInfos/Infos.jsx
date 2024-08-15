@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import placeholder from '../../images/placeholder.png';
+import placeholder from '../../../uploads/placeholder.png';
 
 const Infos = () => {
   const { name } = useParams();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [showArchiveModal, setShowArchiveModal] = useState(false); // État pour le modal d'archivage
   const [modalField, setModalField] = useState('');
   const [modalValue, setModalValue] = useState('');
-  const [showArchiveModal, setShowArchiveModal] = useState(false); // État pour le modal d'archivage
   const [selectedFile, setSelectedFile] = useState(null);
   const [agent, setAgent] = useState(null);
 
@@ -40,38 +40,32 @@ const Infos = () => {
     if (!agent) return;
 
     if (modalField === 'userProfile.image' && selectedFile) {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-
-      try {
-        const response = await axios.post(`http://localhost:3000/upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        const fileUrl = response.data.filepath;
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
 
         const updatedAgent = {
           ...agent,
           userProfile: {
             ...agent.userProfile,
-            image: fileUrl,
+            image: `data:image/png;base64,${base64String}`,
           },
         };
 
-        await axios.put(`http://localhost:3000/entries/${agent.id}`, updatedAgent, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        try {
+          await axios.put(`http://localhost:3000/entries/${agent.id}`, updatedAgent, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
 
-        setAgent(updatedAgent);
-        setShowModal(false);
-
-      } catch (error) {
-        console.error("Erreur lors de la mise à jour de l'image:", error);
-      }
+          setAgent(updatedAgent);
+          setShowModal(false);
+        } catch (error) {
+          console.error("Erreur lors de la mise à jour de l'image:", error);
+        }
+      };
+      reader.readAsDataURL(selectedFile);
     } else {
       const updatedAgent = { ...agent, [modalField]: modalValue };
 
@@ -98,7 +92,7 @@ const Infos = () => {
 
     try {
       // Ajouter l'agent dans la section "archive"
-      await axios.post(`http://localhost:3000/archive`, agent, {
+      await axios.post(`http://localhost:3000/archives`, agent, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -132,10 +126,12 @@ const Infos = () => {
       </div>
       <div className="w-4/6 px-8 py-1 flex flex-col justify-start items-start gap-10 divide-y">
         <div className="w-full flex flex-col gap-1 py-4">
-          <h4 className="font-semibold text-orange-500 text-lg">Identité</h4>
-          <div className="w-full flex justify-between items-center ">
-          <p className="w-1/2 text-zinc-400/75">Toutes les informations concernant l'identité de l'agent mises à disposition</p>
-          <button onClick={() => setShowArchiveModal(true)} className="px-4 py-2 bg-orange-500 font-semibold text-white rounded-2xl hover:bg-red-500 ease-in-out duration-500">Archiver l'agent</button> {/* Bouton Archiver */}
+          <div className="w-full flex justify-between items-center">
+            <div className="w-2/3">
+              <h4 className="font-semibold text-orange-500 text-lg">Identité</h4>
+              <p className="text-zinc-400/75">Toutes les informations concernant l'identité de l'agent mises à disposition</p>
+            </div>
+          <button onClick={() => setShowArchiveModal(true)} className="px-4 py-2 bg-red-400 font-semibold text-white rounded-2xl">Archiver</button>
           </div>
           
         </div>
@@ -195,7 +191,7 @@ const Infos = () => {
         </div>
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-end items-center pr-2">
-            <Link to={`/${agent.name}/contract`} className='bg-slate-400 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-500 ease-in-out duration-500'>voir son contrat</Link>
+            <Link to={`/${agent.name}/contract`} className='bg-slate-400 text-white font-semibold px-4 py-2 rounded-lg'>Voir son contrat</Link>
           </div>
         </div>
       </div>
@@ -227,10 +223,10 @@ const Infos = () => {
       {showArchiveModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4 text-slate-600">Confirmer l'archivage</h2>
-            <p className='text-slate-600'>Voulez-vous vraiment archiver cet agent ? Cette action est irréversible.</p>
+            <h2 className="text-xl font-bold mb-4">Confirmer l'archivage</h2>
+            <p>Voulez-vous vraiment archiver cet agent ? Cette action est irréversible.</p>
             <div className="flex justify-end gap-4 mt-4">
-              <button onClick={() => setShowArchiveModal(false)} className="px-4 py-2 bg-gray-200 rounded-lg text-slate-600">Annuler</button>
+              <button onClick={() => setShowArchiveModal(false)} className="px-4 py-2 bg-gray-300 rounded-lg">Annuler</button>
               <button onClick={handleArchiveAgent} className="px-4 py-2 bg-red-500 text-white rounded-lg">Archiver</button>
             </div>
           </div>

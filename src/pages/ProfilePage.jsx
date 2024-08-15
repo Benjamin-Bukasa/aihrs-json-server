@@ -6,6 +6,7 @@ function ProfilePage() {
   const { user, loginUser } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [profilePhoto, setProfilePhoto] = useState(null);
+  const [profilePhotoFile, setProfilePhotoFile] = useState(null); // Pour stocker le fichier sélectionné
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -18,7 +19,16 @@ function ProfilePage() {
   }, [user]);
 
   const handlePhotoChange = (e) => {
-    setProfilePhoto(URL.createObjectURL(e.target.files[0]));
+    const file = e.target.files[0];
+    setProfilePhotoFile(file);
+
+    // Prévisualiser la photo
+    setProfilePhoto(URL.createObjectURL(file));
+  };
+
+  const handleDeletePhoto = () => {
+    setProfilePhoto(null);
+    setProfilePhotoFile(null);
   };
 
   const handleSubmit = async (e) => {
@@ -27,17 +37,38 @@ function ProfilePage() {
       alert('New passwords do not match');
       return;
     }
+
     try {
+      // Vérifier les informations de l'utilisateur
       const response = await axios.get(`http://localhost:3000/users?username=${user.username}&password=${currentPassword}`);
       if (response.data.length > 0) {
         const updatedUser = response.data[0];
         updatedUser.username = username;
-        updatedUser.profilePhoto = profilePhoto;
-        updatedUser.password = newPassword || updatedUser.password;
 
-        await axios.put(`http://localhost:3000/users/${updatedUser.id}`, updatedUser);
-        loginUser(updatedUser, true); // Update context and persist in local storage
-        alert('Profile updated successfully');
+        if (profilePhotoFile) {
+          // Si une nouvelle photo de profil est sélectionnée, la convertir en base64
+          const reader = new FileReader();
+          reader.onloadend = async () => {
+            updatedUser.profilePhoto = reader.result;
+
+            // Mettre à jour l'utilisateur dans db.json
+            await axios.put(`http://localhost:3000/users/${updatedUser.id}`, updatedUser);
+            loginUser(updatedUser, true); // Mettre à jour le contexte utilisateur
+
+            alert('Profile updated successfully');
+          };
+          reader.readAsDataURL(profilePhotoFile);
+        } else {
+          // Si aucune nouvelle photo n'est sélectionnée ou si la photo est supprimée
+          updatedUser.profilePhoto = profilePhoto || ''; // Si profilePhoto est null, mettre une chaîne vide
+
+          updatedUser.password = newPassword || updatedUser.password;
+
+          await axios.put(`http://localhost:3000/users/${updatedUser.id}`, updatedUser);
+          loginUser(updatedUser, true); // Mettre à jour le contexte utilisateur
+
+          alert('Profile updated successfully');
+        }
       } else {
         alert('Invalid current password');
       }
@@ -67,6 +98,15 @@ function ProfilePage() {
               onChange={handlePhotoChange}
               className="text-sm text-slate-600"
             />
+            {profilePhoto && (
+              <button
+                type="button"
+                onClick={handleDeletePhoto}
+                className="ml-4 px-4 py-2 bg-red-500 text-white font-semibold rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                Supprimer la photo
+              </button>
+            )}
           </div>
         </div>
 

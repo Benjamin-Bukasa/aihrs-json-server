@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 // import { FaArrowRightToCity, FaPlusCircle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import data from "../../../db.json"
 
 const MadResume = () => {
   const [showModal, setShowModal] = useState(false);
@@ -77,8 +78,8 @@ const MadResume = () => {
             </button>
           </p>
           <p className="py-2 flex justify-between items-center">
-            <span className="text-slate-600 font-semibold">Date du dernier enregistrement</span>
-            <span className="">{new Date().toLocaleString()}</span>
+            <span className="text-slate-600 font-semibold">Date du dernier ajout</span>
+            <span className="">{data.users[0].dateOfBirth}</span>
           </p>
         </div>
       </div>
