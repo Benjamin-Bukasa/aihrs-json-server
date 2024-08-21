@@ -49,6 +49,7 @@ function UserAttendance() {
   const [employeeName, setEmployeeName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [totals, setTotals] = useState(null);
 
   const handleAdd = () => {
     const start = new Date(`1970-01-01T${startTime}:00`);
@@ -122,13 +123,16 @@ function UserAttendance() {
     handleDelete(index);
   };
 
-  const dateNow = Date.now()
+  const handleCalculateTotals = () => {
+    const totals = calculateTotal(data);
+    setTotals(totals);
+  };
 
   const exportToExcel = () => {
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    XLSX.writeFile(wb, "Pointage_"+dateNow+".xlsx");
+    XLSX.writeFile(wb, "Pointage.xlsx");
   };
 
   const exportToPDF = () => {
@@ -158,10 +162,10 @@ function UserAttendance() {
           "",
           "",
           "",
-          totals.total130,
-          totals.total160,
-          totals.total25,
-          totals.total200,
+          totals.total130.toFixed(2),
+          totals.total160.toFixed(2),
+          totals.total25.toFixed(2),
+          totals.total200.toFixed(2),
         ],
       ],
     });
@@ -231,6 +235,12 @@ function UserAttendance() {
         >
           <FaFilePdf className="mr-2" /> Exporter en PDF
         </button>
+        <button
+          onClick={handleCalculateTotals}
+          className="bg-green-500 text-white p-2 rounded flex items-center"
+        >
+          Calculer les Totaux
+        </button>
       </div>
 
       <table className="mt-4 w-full border-collapse">
@@ -249,73 +259,65 @@ function UserAttendance() {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => {
-            const totals =
-              (index + 1) % 5 === 0
-                ? calculateTotal(data.slice(index - 4, index + 1))
-                : null;
-            return (
-              <React.Fragment key={index}>
-                <tr>
-                  <td className="border p-2">{row.date}</td>
-                  <td className="border p-2">{row.employeeName}</td>
-                  <td className="border p-2">{row.startTime}</td>
-                  <td className="border p-2">{row.endTime}</td>
-                  <td className="border p-2">
-                    {parseFloat(row.totalHours).toFixed(2)}
-                  </td>
-                  <td className="border p-2">
-                    {parseFloat(row.hours130).toFixed(2)}
-                  </td>
-                  <td className="border p-2">
-                    {parseFloat(row.hours160).toFixed(2)}
-                  </td>
-                  <td className="border p-2">
-                    {parseFloat(row.hours25).toFixed(2)}
-                  </td>
-                  <td className="border p-2">
-                    {parseFloat(row.hours200).toFixed(2)}
-                  </td>
-                  <td className="border p-2 flex justify-center space-x-2">
-                    <button
-                      onClick={() => handleEdit(index)}
-                      className="text-yellow-500"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="text-red-500"
-                    >
-                      <FaTrashAlt />
-                    </button>
-                  </td>
-                </tr>
-                {totals && (
-                  <tr>
-                    <td className="border p-2 font-bold">Total</td>
-                    <td className="border p-2"></td>
-                    <td className="border p-2"></td>
-                    <td className="border p-2"></td>
-                    <td className="border p-2"></td>
-                    <td className="border p-2 font-bold">
-                      {totals.total130.toFixed(2)}
-                    </td>
-                    <td className="border p-2 font-bold">
-                      {totals.total160.toFixed(2)}
-                    </td>
-                    <td className="border p-2 font-bold">
-                      {totals.total25.toFixed(2)}
-                    </td>
-                    <td className="border p-2 font-bold">
-                      {totals.total200.toFixed(2)}
-                    </td>
-                    <td className="border p-2"></td>
-                  </tr>
-                )}
-              </React.Fragment>
-            );
-          })}
+          {data.map((row, index) => (
+            <tr key={index}>
+              <td className="border p-2">{row.date}</td>
+              <td className="border p-2">{row.employeeName}</td>
+              <td className="border p-2">{row.startTime}</td>
+              <td className="border p-2">{row.endTime}</td>
+              <td className="border p-2">
+                {parseFloat(row.totalHours).toFixed(2)}
+              </td>
+              <td className="border p-2">
+                {parseFloat(row.hours130).toFixed(2)}
+              </td>
+              <td className="border p-2">
+                {parseFloat(row.hours160).toFixed(2)}
+              </td>
+              <td className="border p-2">
+                {parseFloat(row.hours25).toFixed(2)}
+              </td>
+              <td className="border p-2">
+                {parseFloat(row.hours200).toFixed(2)}
+              </td>
+              <td className="border p-2 flex justify-center space-x-2">
+                <button
+                  onClick={() => handleEdit(index)}
+                  className="text-yellow-500"
+                >
+                  <FaEdit />
+                </button>
+                <button
+                  onClick={() => handleDelete(index)}
+                  className="text-red-500"
+                >
+                  <FaTrashAlt />
+                </button>
+              </td>
+            </tr>
+          ))}
+          {totals && (
+            <tr>
+              <td className="border p-2 font-bold">Total</td>
+              <td className="border p-2"></td>
+              <td className="border p-2"></td>
+              <td className="border p-2"></td>
+              <td className="border p-2"></td>
+              <td className="border p-2 font-bold">
+                {totals.total130.toFixed(2)}
+              </td>
+              <td className="border p-2 font-bold">
+                {totals.total160.toFixed(2)}
+              </td>
+              <td className="border p-2 font-bold">
+                {totals.total25.toFixed(2)}
+              </td>
+              <td className="border p-2 font-bold">
+                {totals.total200.toFixed(2)}
+              </td>
+              <td className="border p-2"></td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

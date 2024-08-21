@@ -13,7 +13,8 @@
       "position": "IT",
       "role": "admin",
       "workLocation": "HQ",
-      "password": "ABCabc123#"
+      "password": "ABCabc123#",
+      "profilePhoto": ""
     },
     {
       "id": "888c",
@@ -44,10 +45,82 @@
       "role": "utilisateur",
       "workLocation": "HQ",
       "password": "ABCabc123#"
+    },
+    {
+      "id": "39ba",
+      "username": "davina.musau",
+      "firstName": "Davina",
+      "lastName": "MUSAU",
+      "middleName": "MUSAU",
+      "dateOfBirth": "2024-08-16",
+      "gender": "Femme",
+      "email": "davina.musau@afrikinterim.com",
+      "department": "Outsourcing",
+      "position": "HRBP_HQ",
+      "role": "utilisateur",
+      "workLocation": "HQ",
+      "password": "Password07"
+    },
+    {
+      "id": "3a2c",
+      "username": "william.nyamabo",
+      "firstName": "William",
+      "lastName": "Nyamabo",
+      "middleName": "William",
+      "dateOfBirth": "1994-11-29",
+      "gender": "Homme",
+      "email": "william.nyamabo@afrikinterim.com",
+      "department": "Outsourcing",
+      "position": "HRBP_HQ",
+      "role": "utilisateur",
+      "workLocation": "HQ",
+      "password": "ABCabc123#"
+    },
+    {
+      "id": "ce21",
+      "username": "nancy.tshibangu",
+      "firstName": "TSHIBANGU",
+      "lastName": "Nancy",
+      "middleName": "TSHIBANGU",
+      "dateOfBirth": "1995-11-29",
+      "gender": "Femme",
+      "email": "nancy.tshibangu@afrikinterim.com",
+      "department": "Outsourcing",
+      "position": "OM",
+      "role": "admin",
+      "workLocation": "HQ",
+      "password": "ABCabc123#"
     }
   ],
   "upload": [],
-  "notifications": [],
+  "notifications": [
+    {
+      "id": "16b9",
+      "message": "Utilisateur undefined créé par adminIT",
+      "action": "Créer",
+      "entity": "User",
+      "entityId": "ce21",
+      "date": "20/08/2024 15:00:25"
+    },
+    {
+      "id": "f271",
+      "message": "Agent LONGE DJATA archivé.",
+      "action": "Archiver",
+      "entity": "Agent",
+      "entityId": "1159",
+      "date": "20/08/2024 16:33:53",
+      "userId": "5c49"
+    },
+    {
+      "id": "d53c",
+      "message": "Agent LONGE DJATA archivé.",
+      "action": "Archiver",
+      "entity": "Agent",
+      "entityId": "1159",
+      "date": "20/08/2024 17:17:20",
+      "userId": "5c49"
+    }
+  ],
   "clients": [
     {
       "id": "2158",
@@ -72,11 +145,46 @@
       "gender": "Masculin",
       "category": "Journalier",
       "status": true,
-      "CreatedAt": 2024,
+      "CreatedAt": "",
       "placeOfBirth": "Lubumbashi",
       "dateOfBirth": "1995-11-29",
       "matrimonial": "Marié",
       "children": 3,
+      "adress": "251, Av. Ngiri-Ngiri C. Ngiri-Ngiri Q. Saïo",
+      "userProfile": {
+        "image": "/uploads/placeholder.png"
+      },
+      "manager": "",
+      "hrbp": "",
+      "supervisor": "",
+      "typeAffectation": "",
+      "company": "Bracongo",
+      "function": "Manutentionnaire",
+      "dateOfAffectation": "12/11/2023",
+      "typeContract": "",
+      "startContract": "",
+      "endContract": "",
+      "renewContract": "",
+      "netSalary": "",
+      "location": "MUANDA ",
+      "cnss": "",
+      "pointage": [],
+      "reporting": []
+    }
+  ],
+  "archives": [
+    {
+      "id": "1159",
+      "firstName": "",
+      "name": "LONGE DJATA",
+      "gender": "Masculin",
+      "category": "Journalier",
+      "status": true,
+      "CreatedAt": "",
+      "placeOfBirth": "Kinshasa",
+      "dateOfBirth": "1995-11-29",
+      "matrimonial": "Marié",
+      "children": "6",
       "adress": "251, Av. Ngiri-Ngiri C. Ngiri-Ngiri Q. Saïo",
       "userProfile": {
         "image": "/uploads/placeholder.png"
@@ -105,7 +213,7 @@
       "gender": "Masculin",
       "category": "Journalier",
       "status": true,
-      "CreatedAt": 2024,
+      "CreatedAt": "",
       "placeOfBirth": "Kinshasa",
       "dateOfBirth": "1995-11-29",
       "matrimonial": "Marié",
@@ -131,6 +239,5 @@
       "pointage": [],
       "reporting": []
     }
-  ],
-  "archives": []
+  ]
 }

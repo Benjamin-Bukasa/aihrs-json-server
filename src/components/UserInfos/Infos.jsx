@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import placeholder from '../../../uploads/placeholder.png';
+import { createNotification } from '../../../services/notificationService'; // Importer le service de notification
+import { UserContext } from '../../UserContext'; // Importer le contexte utilisateur
 
 const Infos = () => {
   const { name } = useParams();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [showArchiveModal, setShowArchiveModal] = useState(false); // État pour le modal d'archivage
+  const [showArchiveModal, setShowArchiveModal] = useState(false);
   const [modalField, setModalField] = useState('');
   const [modalValue, setModalValue] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [agent, setAgent] = useState(null);
+  const { user, email, firstName, lastName } = useContext(UserContext); // Utiliser les informations de l'utilisateur depuis le contexte
 
   useEffect(() => {
     const fetchAgent = async () => {
@@ -39,12 +42,14 @@ const Infos = () => {
   const handleSaveField = async () => {
     if (!agent) return;
 
+    let updatedAgent;
+
     if (modalField === 'userProfile.image' && selectedFile) {
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
 
-        const updatedAgent = {
+        updatedAgent = {
           ...agent,
           userProfile: {
             ...agent.userProfile,
@@ -61,13 +66,21 @@ const Infos = () => {
 
           setAgent(updatedAgent);
           setShowModal(false);
+          await createNotification({
+            message: `Photo de profil mise à jour pour ${agent.name}.`,
+            action: 'Mettre à jour',
+            entity: 'Agent',
+            entityId: agent.id,
+            date: new Date().toLocaleString(),
+            userId: user.id,
+          });
         } catch (error) {
           console.error("Erreur lors de la mise à jour de l'image:", error);
         }
       };
       reader.readAsDataURL(selectedFile);
     } else {
-      const updatedAgent = { ...agent, [modalField]: modalValue };
+      updatedAgent = { ...agent, [modalField]: modalValue };
 
       try {
         await axios.put(`http://localhost:3000/entries/${agent.id}`, updatedAgent, {
@@ -81,6 +94,15 @@ const Infos = () => {
         if (modalField === 'name') {
           navigate(`/${modalValue}`);
         }
+
+        await createNotification({
+          message: `Information "${modalField}" mise à jour pour ${agent.name}.`,
+          action: 'Mettre à jour',
+          entity: 'Agent',
+          entityId: agent.id,
+          date: new Date().toLocaleString(),
+          userId: user.id,
+        });
       } catch (error) {
         console.error("Erreur lors de la mise à jour de l'information:", error);
       }
@@ -105,9 +127,18 @@ const Infos = () => {
         },
       });
 
+      // Créer une notification pour l'archivage de l'agent
+      await createNotification({
+        message: `Agent ${agent.name} archivé.`,
+        action: 'Archiver',
+        entity: 'Agent',
+        entityId: agent.id,
+        date: new Date().toLocaleString(),
+        userId: user.id,
+      });
+
       // Rediriger vers "/global-tracking"
       navigate('/global-tracking');
-
     } catch (error) {
       console.error("Erreur lors de l'archivage de l'agent:", error);
     }
@@ -122,19 +153,21 @@ const Infos = () => {
       <div className="w-1/6 flex flex-col justify-start items-center gap-4 py-7">
         <img src={agent.userProfile?.image || placeholder} alt="" className="w-40 h-40 rounded-xl opacity-75" />
         <button onClick={() => handleOpenModal('userProfile.image', agent.userProfile?.image)} className="px-4 py-1 bg-orange-500 font-semibold text-white rounded-2xl">Modifier photo</button>
-        
       </div>
       <div className="w-4/6 px-8 py-1 flex flex-col justify-start items-start gap-10 divide-y">
+        {/* Identité Section */}
         <div className="w-full flex flex-col gap-1 py-4">
           <div className="w-full flex justify-between items-center">
             <div className="w-2/3">
               <h4 className="font-semibold text-orange-500 text-lg">Identité</h4>
               <p className="text-zinc-400/75">Toutes les informations concernant l'identité de l'agent mises à disposition</p>
             </div>
-          <button onClick={() => setShowArchiveModal(true)} className="px-4 py-2 bg-red-400 font-semibold text-white rounded-2xl">Archiver</button>
+            <button onClick={() => setShowArchiveModal(true)} className="px-4 py-2 bg-red-400 font-semibold text-white rounded-2xl">Archiver</button>
           </div>
-          
         </div>
+        
+        {/* Affichage des informations */}
+        {/* Nom complet */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
@@ -144,6 +177,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('name', agent.name)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+        {/* Genre */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
@@ -153,6 +187,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('gender', agent.gender)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+        {/* Lieu et date de naissance */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
@@ -162,6 +197,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('placeOfBirth', agent.placeOfBirth)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+        {/* État Civil */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
@@ -171,6 +207,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('matrimonial', agent.matrimonial)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+        {/* Nombre d'enfants */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
@@ -180,6 +217,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('children', agent.children)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+        {/* Adresse Domicile */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
@@ -189,6 +227,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('adress', agent.adress)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+        {/* Voir contrat */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-end items-center pr-2">
             <Link to={`/${agent.name}/contract`} className='bg-slate-400 text-white font-semibold px-4 py-2 rounded-lg'>Voir son contrat</Link>

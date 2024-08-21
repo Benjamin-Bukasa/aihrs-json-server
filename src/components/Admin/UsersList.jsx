@@ -83,6 +83,7 @@ const UsersList = ({ currentUser }) => {
             <th className="py-2 text-left">Prénom</th>
             <th className="py-2 text-left">Nom</th>
             <th className="py-2 text-left">Email</th>
+            <th className="py-2 text-left">Mot de passe</th>
             <th className="py-2 text-left">Département</th>
             <th className="py-2 text-left">Position</th>
             <th className="py-2 text-left">Actions</th>
@@ -96,6 +97,7 @@ const UsersList = ({ currentUser }) => {
                 <td className="py-2 text-left">{user.firstName}</td>
                 <td className="py-2 text-left">{user.lastName}</td>
                 <td className="py-2 text-left">{user.email}</td>
+                <td className="py-2 text-left">{user.password}</td>
                 <td className="py-2 text-left">{user.department}</td>
                 <td className="py-2 text-left">{user.position}</td>
                 <td className="py-2 text-left">

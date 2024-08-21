@@ -2,8 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { MdClose } from "react-icons/md";
 
-
-const ModalAddUser = ({ visible, onClose, onAddUser }) => {
+const ModalAddUser = ({ visible, onClose, onUserCreated }) => {
   const [formData, setFormData] = useState({
     username: '',
     firstName: '',
@@ -41,7 +40,7 @@ const ModalAddUser = ({ visible, onClose, onAddUser }) => {
     }
 
     try {
-      await axios.post('http://localhost:3000/users', {
+      const response = await axios.post('http://localhost:3000/users', {
         username: formData.username,
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -55,8 +54,12 @@ const ModalAddUser = ({ visible, onClose, onAddUser }) => {
         workLocation: formData.workLocation,
         password: formData.password,
       });
+      
+      const newUser = response.data;
       alert('Utilisateur ajouté avec succès');
-      onAddUser();  // Appelle la fonction pour actualiser la liste des utilisateurs
+      
+      onUserCreated(newUser);  // Appeler la fonction pour créer une notification
+      
       onClose();
     } catch (error) {
       console.error('Erreur lors de l\'ajout de l\'utilisateur', error);
@@ -70,7 +73,7 @@ const ModalAddUser = ({ visible, onClose, onAddUser }) => {
       onClick={handleClose}
       className="fixed inset-[-10%] m-auto backdrop-blur-sm bg-black bg-opacity-60 sm:h-full shadow-custom z-30 flex justify-center items-center ease-in-out"
     >
-      <div className=" flex flex-col h-3/4 gap-1 bg-white rounded-lg shadow-custom-light p-4">
+      <div className="flex flex-col h-3/4 gap-1 bg-white rounded-lg shadow-custom-light p-4">
         <div className="w-full flex justify-end items-center px-0 py-2 ">
           <button
             onClick={onClose}
@@ -87,6 +90,7 @@ const ModalAddUser = ({ visible, onClose, onAddUser }) => {
             onSubmit={handleSubmit}
             className="w-full h-full flex flex-col justify-start gap-8 items-start px-1 py-4"
           >
+            {/* Champs du formulaire */}
             <div className="w-full flex justify-between items-center gap-1">
               <input
                 type="text"

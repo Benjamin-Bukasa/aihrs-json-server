@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-// import { FaArrowRightToCity, FaPlusCircle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import data from "../../../db.json"
+import { createNotification } from '../../../services/notificationService'; // Import du service de notification
+import data from "../../../db.json";
 
 const MadResume = () => {
   const [showModal, setShowModal] = useState(false);
@@ -46,11 +46,22 @@ const MadResume = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/entries', formData);
+      const response = await axios.post('http://localhost:3000/entries', formData);
+
+      // Créer une notification après l'ajout de l'agent
+      await createNotification({
+        message: `Nouvel agent ${formData.firstName} ${formData.name} ajouté.`,
+        action: 'Créer',
+        entity: 'Agent',
+        entityId: response.data.id,
+        date: new Date().toLocaleString(),
+      });
+
       setShowModal(false);
-      // Optionnel : ajouter une logique pour rafraîchir la liste des employés ou afficher une notification
+      alert('Agent ajouté avec succès !');
     } catch (error) {
-      console.error("Erreur lors de l'ajout de l'employé:", error);
+      console.error("Erreur lors de l'ajout de l'agent:", error);
+      alert('Une erreur est survenue lors de l\'ajout de l\'agent.');
     }
   };
 
