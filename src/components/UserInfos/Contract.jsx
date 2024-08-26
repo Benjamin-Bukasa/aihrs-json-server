@@ -139,54 +139,54 @@ const Contract = () => {
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
               <p className="w-1/2 font-semibold text-slate-600">Lieu d'Affectation</p>
-              <p className="w-1/2 text-slate-500">{agent.name}</p>
+              <p className="w-1/2 text-slate-500">{agent.location}</p>
             </div>
-            <button onClick={() => handleOpenModal('name', agent.name)} className='text-orange-500 font-semibold'>Modifier</button>
+            <button onClick={() => handleOpenModal('location', agent.location)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
               <p className="w-1/2 font-semibold text-slate-600">Date d'affectation</p>
-              <p className="w-1/2 text-slate-500">{agent.gender}</p>
+              <p className="w-1/2 text-slate-500">{agent.dateOfAffectation}</p>
             </div>
-            <button onClick={() => handleOpenModal('gender', agent.gender)} className='text-orange-500 font-semibold'>Modifier</button>
+            <button onClick={() => handleOpenModal('dateOfAffectation', agent.dateOfAffectation)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
               <p className="w-1/2 font-semibold text-slate-600">Type de contrat</p>
-              <p className="w-1/2 text-slate-500">{agent.placeOfBirth}, {agent.dateOfBirth}</p>
+              <p className="w-1/2 text-slate-500">{agent.typeContract}</p>
             </div>
-            <button onClick={() => handleOpenModal('placeOfBirth', agent.placeOfBirth)} className='text-orange-500 font-semibold'>Modifier</button>
+            <button onClick={() => handleOpenModal('typeContract', agent.typeContract)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
-              <p className="w-1/2 font-semibold text-slate-600">Date Debut/Fin contrat</p>
-              <p className="w-1/2 text-slate-500">{agent.matrimonial}</p>
+              <p className="w-1/2 font-semibold text-slate-600">Date Fin contrat</p>
+              <p className="w-1/2 text-slate-500">{agent.endContract}</p>
             </div>
-            <button onClick={() => handleOpenModal('matrimonial', agent.matrimonial)} className='text-orange-500 font-semibold'>Modifier</button>
+            <button onClick={() => handleOpenModal('endContract', agent.endContract)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
               <p className="w-1/2 font-semibold text-slate-600">Fonction</p>
-              <p className="w-1/2 text-slate-500">{agent.children}</p>
+              <p className="w-1/2 text-slate-500">{agent.function}</p>
             </div>
-            <button onClick={() => handleOpenModal('children', agent.children)} className='text-orange-500 font-semibold'>Modifier</button>
+            <button onClick={() => handleOpenModal('function', agent.function)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
               <p className="w-1/2 font-semibold text-slate-600">Salaire Net</p>
-              <p className="w-1/2 text-slate-500">{agent.adress}</p>
+              <p className="w-1/2 text-slate-500">{agent.netSalary}</p>
             </div>
-            <button onClick={() => handleOpenModal('adress', agent.adress)} className='text-orange-500 font-semibold'>Modifier</button>
+            <button onClick={() => handleOpenModal('netSalary', agent.netSalary)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
         <div className="w-full flex flex-col py-2 text-[14px]">

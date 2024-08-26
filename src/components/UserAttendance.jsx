@@ -14,7 +14,7 @@ const isHolidayInDRC = (date) => {
     "12-25", // Noël
     "12-31", // Réveillon
     "06-05", // Kimbangu
-    "05-17", // liberation AFDL
+    "05-17", // Liberation AFDL
     "01-17", // Lumumba
     "01-16", // Laurent Kabila
   ];
@@ -49,7 +49,8 @@ function UserAttendance() {
   const [employeeName, setEmployeeName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [totals, setTotals] = useState(null);
+  const [weeklyTotals, setWeeklyTotals] = useState([]);
+  const [grandTotal, setGrandTotal] = useState(null);
 
   const handleAdd = () => {
     const start = new Date(`1970-01-01T${startTime}:00`);
@@ -123,9 +124,24 @@ function UserAttendance() {
     handleDelete(index);
   };
 
-  const handleCalculateTotals = () => {
-    const totals = calculateTotal(data);
-    setTotals(totals);
+  const handleCalculateWeeklyTotals = () => {
+    const newWeeklyTotals = [];
+    let currentWeek = [];
+
+    data.forEach((row, index) => {
+      currentWeek.push(row);
+
+      if ((index + 1) % 7 === 0 || index === data.length - 1) {
+        const weekTotal = calculateTotal(currentWeek);
+        newWeeklyTotals.push(weekTotal);
+        currentWeek = [];
+      }
+    });
+
+    setWeeklyTotals(newWeeklyTotals);
+
+    const total = calculateTotal(newWeeklyTotals);
+    setGrandTotal(total);
   };
 
   const exportToExcel = () => {
@@ -153,22 +169,23 @@ function UserAttendance() {
         row.hours200,
       ]),
     });
-    const totals = calculateTotal(data);
-    autotable(doc, {
-      head: [
-        [
-          "Total",
-          "",
-          "",
-          "",
-          "",
-          totals.total130.toFixed(2),
-          totals.total160.toFixed(2),
-          totals.total25.toFixed(2),
-          totals.total200.toFixed(2),
+    if (grandTotal) {
+      autotable(doc, {
+        head: [
+          [
+            "Total Global",
+            "",
+            "",
+            "",
+            "",
+            grandTotal.total130.toFixed(2),
+            grandTotal.total160.toFixed(2),
+            grandTotal.total25.toFixed(2),
+            grandTotal.total200.toFixed(2),
+          ],
         ],
-      ],
-    });
+      });
+    }
     doc.save("heures_travail.pdf");
   };
 
@@ -236,7 +253,7 @@ function UserAttendance() {
           <FaFilePdf className="mr-2" /> Exporter en PDF
         </button>
         <button
-          onClick={handleCalculateTotals}
+          onClick={handleCalculateWeeklyTotals}
           className="bg-green-500 text-white p-2 rounded flex items-center"
         >
           Calculer les Totaux
@@ -260,60 +277,84 @@ function UserAttendance() {
         </thead>
         <tbody>
           {data.map((row, index) => (
-            <tr key={index}>
-              <td className="border p-2">{row.date}</td>
-              <td className="border p-2">{row.employeeName}</td>
-              <td className="border p-2">{row.startTime}</td>
-              <td className="border p-2">{row.endTime}</td>
-              <td className="border p-2">
-                {parseFloat(row.totalHours).toFixed(2)}
-              </td>
-              <td className="border p-2">
-                {parseFloat(row.hours130).toFixed(2)}
-              </td>
-              <td className="border p-2">
-                {parseFloat(row.hours160).toFixed(2)}
-              </td>
-              <td className="border p-2">
-                {parseFloat(row.hours25).toFixed(2)}
-              </td>
-              <td className="border p-2">
-                {parseFloat(row.hours200).toFixed(2)}
-              </td>
-              <td className="border p-2 flex justify-center space-x-2">
-                <button
-                  onClick={() => handleEdit(index)}
-                  className="text-yellow-500"
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  onClick={() => handleDelete(index)}
-                  className="text-red-500"
-                >
-                  <FaTrashAlt />
-                </button>
-              </td>
-            </tr>
+            <React.Fragment key={index}>
+              <tr>
+                <td className="border p-2">{row.date}</td>
+                <td className="border p-2">{row.employeeName}</td>
+                <td className="border p-2">{row.startTime}</td>
+                <td className="border p-2">{row.endTime}</td>
+                <td className="border p-2">
+                  {parseFloat(row.totalHours).toFixed(2)}
+                </td>
+                <td className="border p-2">
+                  {parseFloat(row.hours130).toFixed(2)}
+                </td>
+                <td className="border p-2">
+                  {parseFloat(row.hours160).toFixed(2)}
+                </td>
+                <td className="border p-2">
+                  {parseFloat(row.hours25).toFixed(2)}
+                </td>
+                <td className="border p-2">
+                  {parseFloat(row.hours200).toFixed(2)}
+                </td>
+                <td className="border p-2 flex justify-center space-x-2">
+                  <button
+                    onClick={() => handleEdit(index)}
+                    className="text-yellow-500"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(index)}
+                    className="text-red-500"
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </td>
+              </tr>
+              {(index + 1) % 7 === 0 && (
+                <tr className="font-bold bg-gray-100">
+                  <td className="border p-2">Total Semaine</td>
+                  <td className="border p-2"></td>
+                  <td className="border p-2"></td>
+                  <td className="border p-2"></td>
+                  <td className="border p-2"></td>
+                  <td className="border p-2">
+                    {calculateTotal(data.slice(index - 6, index + 1)).total130.toFixed(2)}
+                  </td>
+                  <td className="border p-2">
+                    {calculateTotal(data.slice(index - 6, index + 1)).total160.toFixed(2)}
+                  </td>
+                  <td className="border p-2">
+                    {calculateTotal(data.slice(index - 6, index + 1)).total25.toFixed(2)}
+                  </td>
+                  <td className="border p-2">
+                    {calculateTotal(data.slice(index - 6, index + 1)).total200.toFixed(2)}
+                  </td>
+                  <td className="border p-2"></td>
+                </tr>
+              )}
+            </React.Fragment>
           ))}
-          {totals && (
-            <tr>
-              <td className="border p-2 font-bold">Total</td>
+          {grandTotal && (
+            <tr className="font-bold bg-orange-100 text-orange-700">
+              <td className="border p-2">Total Global</td>
               <td className="border p-2"></td>
               <td className="border p-2"></td>
               <td className="border p-2"></td>
               <td className="border p-2"></td>
-              <td className="border p-2 font-bold">
-                {totals.total130.toFixed(2)}
+              <td className="border p-2">
+                {grandTotal.total130.toFixed(2)}
               </td>
-              <td className="border p-2 font-bold">
-                {totals.total160.toFixed(2)}
+              <td className="border p-2">
+                {grandTotal.total160.toFixed(2)}
               </td>
-              <td className="border p-2 font-bold">
-                {totals.total25.toFixed(2)}
+              <td className="border p-2">
+                {grandTotal.total25.toFixed(2)}
               </td>
-              <td className="border p-2 font-bold">
-                {totals.total200.toFixed(2)}
+              <td className="border p-2">
+                {grandTotal.total200.toFixed(2)}
               </td>
               <td className="border p-2"></td>
             </tr>

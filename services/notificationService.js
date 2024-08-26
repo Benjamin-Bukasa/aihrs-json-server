@@ -30,3 +30,19 @@ export const getNotifications = async () => {
     throw error;
   }
 };
+
+/**
+ * Mettre à jour le statut d'une notification
+ * @param {string} notificationId - L'ID de la notification à mettre à jour
+ * @param {Object} status - L'objet contenant le nouveau statut
+ * @returns {Promise} - La promesse axios pour la requête PATCH
+ */
+export const updateNotificationStatus = async (notificationId, status) => {
+  try {
+    const response = await axios.patch(`${API_URL}/${notificationId}`, status);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la notification", error);
+    throw error;
+  }
+};

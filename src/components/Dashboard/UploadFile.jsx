@@ -36,7 +36,7 @@ function UploadFile() {
       });
 
       try {
-        await axios.post('http://localhost:5000/entries', uniqueData);
+        await axios.post('http://localhost:3000/entries', uniqueData);
         alert('Data successfully uploaded to db.json');
       } catch (error) {
         console.error('Error uploading data:', error);

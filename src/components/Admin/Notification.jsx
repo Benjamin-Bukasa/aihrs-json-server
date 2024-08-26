@@ -1,38 +1,114 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { getNotifications } from '../../../services/notificationService';
-import { UserContext } from '../../UserContext'; // Importer le contexte utilisateur
+import { getNotifications, updateNotificationStatus } from '../../../services/notificationService';
+import { UserContext } from '../../UserContext';
+import Modal from 'react-modal';
+import { FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+Modal.setAppElement('#root');
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
+  const [filteredNotifications, setFilteredNotifications] = useState([]);
   const [selectedNotification, setSelectedNotification] = useState(null);
-  
-  // Récupérer les données de l'utilisateur à partir du UserContext
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [notificationsPerPage] = useState(5);
+
   const { role, user, logoutUser, email, firstName, lastName } = useContext(UserContext);
-
-  // Fonction pour récupérer les notifications depuis le serveur
-  const fetchNotifications = async () => {
-    try {
-      const data = await getNotifications();
-      setNotifications(data);
-    } catch (error) {
-      console.error('Erreur lors de la récupération des notifications:', error);
-    }
-  };
-
-  // Fonction pour gérer l'affichage des détails d'une notification
-  const handleViewDetails = (notification) => {
-    setSelectedNotification(notification);
-  };
 
   useEffect(() => {
     fetchNotifications();
   }, []);
 
+  useEffect(() => {
+    filterNotifications();
+  }, [searchTerm, notifications]);
+
+  const fetchNotifications = async () => {
+    try {
+      const data = await getNotifications();
+      const currentDate = new Date();
+      const updatedData = data.map(notification => {
+        const endContractDate = new Date(notification.endContract);
+        if (endContractDate > currentDate && endContractDate < addMonths(currentDate, 1)) {
+          return {
+            ...notification,
+            action: 'Contract nearing end',
+            message: `The contract is about to end on ${notification.endContract}`,
+            viewed: false
+          };
+        }
+        return notification;
+      });
+      setNotifications(updatedData);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des notifications:', error);
+    }
+  };
+
+  const handleViewDetails = (notification) => {
+    setSelectedNotification(notification);
+
+    if (!notification.viewed) {
+      updateNotificationStatus(notification.id, { viewed: true })
+        .then(() => {
+          setNotifications(prevNotifications =>
+            prevNotifications.map(notif =>
+              notif.id === notification.id ? { ...notif, viewed: true } : notif
+            )
+          );
+        })
+        .catch(error => console.error('Erreur lors de la mise à jour de la notification:', error));
+    }
+  };
+
+  const filterNotifications = () => {
+    const filtered = notifications.filter(notification =>
+      notification.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      notification.message.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredNotifications(filtered);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const addMonths = (date, months) => {
+    const d = new Date(date);
+    d.setMonth(d.getMonth() + months);
+    return d;
+  };
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const indexOfLastNotification = currentPage * notificationsPerPage;
+  const indexOfFirstNotification = indexOfLastNotification - notificationsPerPage;
+  const currentNotifications = filteredNotifications.slice(indexOfFirstNotification, indexOfLastNotification);
+  const totalPages = Math.ceil(filteredNotifications.length / notificationsPerPage);
+
+  const closeModal = () => {
+    setSelectedNotification(null);
+  };
+
   return (
-    <div className="w-full p-4 bg-white shadow-custom-light rounded-3xl  mx-auto">
-      <h2 className="text-2xl font-bold text-slate-500 mb-4">Notifications</h2>
-      {notifications.length > 0 ? (
-        notifications.map((notification, index) => (
+    <div className="w-full p-4 bg-white shadow-custom-light rounded-3xl mx-auto">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold text-slate-500">Notifications</h2>
+        <div className="flex items-center">
+          <input
+            type="text"
+            placeholder="Rechercher..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="border rounded-lg p-2 outline-none"
+          />
+          <FaSearch className="ml-2 text-slate-500" />
+        </div>
+      </div>
+
+      {currentNotifications.length > 0 ? (
+        currentNotifications.map((notification, index) => (
           <div
             key={index}
             className={`notification-item p-4 mb-4 border w-full rounded-lg hover:shadow-lg transition-all duration-300 ease-in-out 
@@ -47,9 +123,6 @@ const Notification = () => {
             <p className="text-sm text-slate-500">
               <strong>Détail:</strong> {notification.message || 'Inconnu'}
             </p>
-            {/* <p className="text-sm text-slate-500">
-              <strong>Entité:</strong> {notification.entity || 'Inconnu'} (ID: {notification.entityId || 'Inconnu'})
-            </p> */}
             <div className="flex justify-between items-center mt-4">
               <button
                 className="px-4 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition-all"
@@ -67,25 +140,58 @@ const Notification = () => {
         <p className="text-sm text-slate-500">Aucune notification disponible.</p>
       )}
 
+      <div className="flex justify-between items-center mt-4">
+        <p className="text-sm text-slate-500">
+          {filteredNotifications.length} Notifications trouvées
+        </p>
+        <div className="flex items-center">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="p-2 text-slate-500 disabled:opacity-50"
+          >
+            <FaChevronLeft />
+          </button>
+          <p className="text-sm text-slate-500 mx-4">
+            Page {currentPage} sur {totalPages}
+          </p>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="p-2 text-slate-500 disabled:opacity-50"
+          >
+            <FaChevronRight />
+          </button>
+        </div>
+      </div>
+
       {selectedNotification && (
-        <div className="mt-6 p-4 bg-slate-100 rounded-lg shadow-inner">
+        <Modal
+          isOpen={!!selectedNotification}
+          onRequestClose={closeModal}
+          className="bg-white rounded-lg shadow-xl p-6 mx-auto my-20 w-full max-w-md"
+          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+        >
           <h3 className="text-lg font-bold text-slate-500 mb-2">Détails de l'utilisateur</h3>
           <p className="text-sm text-slate-500">
-            <strong>Nom complet:</strong> {user?.firstName} {lastName}
+            <strong>Nom complet:</strong> {firstName} {lastName}
           </p>
           <p className="text-sm text-slate-500">
-            <strong>Email:</strong> {user?.email || 'Inconnu'}
+            <strong>Email:</strong> {email || 'Inconnu'}
           </p>
           <p className="text-sm text-slate-500">
-            <strong>Rôle:</strong> {user?.role || 'Inconnu'}
+            <strong>Rôle:</strong> {role || 'Inconnu'}
+          </p>
+          <p className="text-sm text-slate-500 mt-4">
+            <strong>Détails de la notification:</strong> {selectedNotification.message}
           </p>
           <button
             className="mt-4 px-4 py-2 bg-slate-400 text-white rounded-lg hover:bg-slate-500 transition-all"
-            onClick={() => setSelectedNotification(null)}
+            onClick={closeModal}
           >
             Fermer
           </button>
-        </div>
+        </Modal>
       )}
     </div>
   );
