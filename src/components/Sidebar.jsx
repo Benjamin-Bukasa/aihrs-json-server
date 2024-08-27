@@ -10,15 +10,19 @@ import { FaUserCog } from "react-icons/fa";
 import { MdSupervisedUserCircle } from "react-icons/md";
 import { GoBellFill } from "react-icons/go";
 import { MdFolderShared } from "react-icons/md";
+import data from '../../db.json'
 
 function Sidebar({sidebarToggle}) {
   const { user } = useContext(UserContext);
+  const notification = data.notifications.filter(item =>item.viewed !== true)
+  console.log
+  const notReadedNotification = notification.length
 
   return (
-    <div className={`${sidebarToggle ? " hidden transition ease-in-out delay-2000":" transition ease-in-out delay-2000 "} w-64 h-screen fixed bg-slate-500 text-white transition ease-in-out delay-2000`}>
+    <div className={`${sidebarToggle ? " hidden transition ease-in-out delay-2000 z-80":" transition ease-in-out delay-2000 z-80 "} w-64 h-screen fixed bg-slate-500 text-white transition ease-in-out delay-2000 z-80`}>
       <h1 className="text-xl text-orange-400 font-bold py-3 px-4">AIHRS Outsourcing</h1>
       <ul>
-      <span className='relative z-30 top-[200px]  right-[-30px] text-[10px] w-1 h-1 p-1 rounded-full bg-orange-500'>0</span>
+      <span className='relative z-30 top-[200px]  right-[-30px] text-[10px] w-1 h-1 p-1 rounded-full bg-orange-500'>{notReadedNotification}</span>
         <li className="py-4 px-4 hover:bg-slate-50/20 hover:text-white font-semibold text-[15px]"><Link to={user?.role === 'admin' ? '/admin-dashboard' : '/dashboard'} className="flex justify-start items-center gap-5"><GoHomeFill size={25}/>Dashboard</Link></li>
         <li className="py-4 px-4 hover:bg-slate-50/20 hover:text-white font-semibold text-[15px]"><Link to="/global-tracking" className="flex justify-start items-center gap-5"><FaTachometerAlt size={25}/>Suivi Global</Link></li>
         <li className="py-4 px-4 hover:bg-slate-50/20 hover:text-white font-semibold text-[15px]"><Link to="/pointage" className="flex justify-start items-center gap-5"><FaFilePowerpoint size={25}/>Pointage</Link></li>

@@ -14,7 +14,7 @@ const Notification = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [notificationsPerPage] = useState(5);
 
-  const { role, user, logoutUser, email, firstName, lastName } = useContext(UserContext);
+  const { role, email, firstName, lastName } = useContext(UserContext);
 
   useEffect(() => {
     fetchNotifications();
@@ -27,20 +27,10 @@ const Notification = () => {
   const fetchNotifications = async () => {
     try {
       const data = await getNotifications();
-      const currentDate = new Date();
-      const updatedData = data.map(notification => {
-        const endContractDate = new Date(notification.endContract);
-        if (endContractDate > currentDate && endContractDate < addMonths(currentDate, 1)) {
-          return {
-            ...notification,
-            action: 'Contract nearing end',
-            message: `The contract is about to end on ${notification.endContract}`,
-            viewed: false
-          };
-        }
-        return notification;
-      });
-      setNotifications(updatedData);
+
+      // Trier les notifications par date en ordre décroissant (du plus récent au plus ancien)
+      const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setNotifications(sortedData);
     } catch (error) {
       console.error('Erreur lors de la récupération des notifications:', error);
     }
@@ -72,12 +62,6 @@ const Notification = () => {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-  };
-
-  const addMonths = (date, months) => {
-    const d = new Date(date);
-    d.setMonth(d.getMonth() + months);
-    return d;
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
