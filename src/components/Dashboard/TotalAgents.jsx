@@ -1,11 +1,12 @@
 import { FaArrowRightToCity } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import db from "../../../db.json"
 
 
 
 const TotalAgents = ({title,total}) => {
-
+  const infoData = db.notifications[0].date.slice(0,10)
   const dateNow = Date.now()
   const date = new Date(dateNow)
   const formatDate = format(date, 'dd/MM/yyyy hh:mm a')
@@ -15,7 +16,7 @@ const TotalAgents = ({title,total}) => {
   return (
     <div className='lg:w-1/3 h-full flex flex-col justify-start items-start shadow-custom-light text-[#4d4d4d] rounded-3xl overflow-hidden sm:w-full border'>
         <div className="w-full h-1/2 flex justify-between items-center px-8 py-2 bg-gray-100  ">
-          <Link to={'/clientsList'} className='w-2/3 flex justify-start items-center gap-2 '>
+          <Link to={'/global-tracking'} className='w-2/3 flex justify-start items-center gap-2 '>
             <span className="p-2 bg-white rounded-lg">
               <FaArrowRightToCity size={25} />
             </span>
@@ -31,8 +32,8 @@ const TotalAgents = ({title,total}) => {
                   
                   </p>
                 <p className="py-2 flex justify-between items-center">
-                  <span className=" font-normal">Date du dernier enregistrement</span>
-                  <span className="">{formatDate}</span>
+                  <span className=" font-normal">Date de la dérnière modification</span>
+                  <span className="">{infoData}</span>
                 </p>
             </div>
         </div>

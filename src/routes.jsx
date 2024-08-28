@@ -17,6 +17,8 @@ import User from './pages/User';
 import { UserContext } from './UserContext';
 import Infos from './components/UserInfos/Infos';
 import Contract from './components/UserInfos/Contract';
+import Client from './components/Client';
+import Clients from './pages/Clients';
 
 function AuthenticatedRoute({ element }) {
   const { user, loading } = useContext(UserContext);
@@ -44,6 +46,7 @@ const routes = [
   { path: '/dashboard', element: <AuthenticatedRoute element={<UserDashboard />} /> },
   { path: '/admin-dashboard', element: <AdminRoute element={<AdminDashboard />} /> },
   { path: '/global-tracking', element: <AuthenticatedRoute element={<GlobalTracking />} /> },
+  { path: '/clients', element: <AuthenticatedRoute element={<Clients />} /> },
   { path: '/pointage', element: <AuthenticatedRoute element={<Pointage />} /> },
   { path: '/admin', element: <AdminRoute element={<AdminPage />} /> },
   { path: '/report', element: <AuthenticatedRoute element={<Report />} /> },
@@ -75,6 +78,33 @@ const routes = [
       },
       {
         path: '/:name/report',
+        element: '',
+      },
+    ]
+  },
+
+  { 
+    path: '/:clientName',
+    element: <AdminRoute element={<Client />} />,
+    children:[
+      {
+        path: '/:clientName',
+        element: <Infos />,
+      },
+      {
+        path: '/:clientName/infos',
+        element: <Infos />,
+      },
+      {
+        path: '/:clientName/contract',
+        element: <Contract/>,
+      },
+      {
+        path: '/:clientName/stats',
+        element: '',
+      },
+      {
+        path: '/:clientName/report',
         element: '',
       },
     ]

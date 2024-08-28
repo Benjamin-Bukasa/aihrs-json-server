@@ -5,6 +5,7 @@ import { createNotification } from '../../../services/notificationService'; // I
 import data from "../../../db.json";
 
 const MadResume = () => {
+  const infoData = data.notifications[0].date
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     id: '',
@@ -90,7 +91,7 @@ const MadResume = () => {
           </p>
           <p className="py-2 flex justify-between items-center">
             <span className="text-slate-600 font-semibold">Date du dernier ajout</span>
-            <span className="">{data.users[0].dateOfBirth}</span>
+            <span className="">{infoData}</span>
           </p>
         </div>
       </div>

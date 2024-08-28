@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 // import { FaArrowRightToCity, FaPlusCircle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import db from '../../../db.json'
 
 const CompanyResume = () => {
+  const data = db.notifications[0].date
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     clientName: '',
@@ -61,8 +63,8 @@ const CompanyResume = () => {
             </button>
           </p>
           <p className="py-2 flex justify-between items-center">
-            <span className="font-normal">Date du dernier enregistrement</span>
-            <span className="">{new Date().toLocaleString()}</span>
+            <span className="font-normal">Date de la dernière modification</span>
+            <span className="">{data}</span>
           </p>
         </div>
       </div>

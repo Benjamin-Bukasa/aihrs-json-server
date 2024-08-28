@@ -8,28 +8,29 @@ import { UserContext } from '../UserContext';
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 
-const AllAgents = () => {
+const AllClients = () => {
   const { role, user, logoutUser } = useContext(UserContext);
-  const [agents, setAgents] = useState([]);
-  const dataApi = db.entries;
-  const data = dataApi.map((agent) => (
-    [agent.id, agent.name, agent.gender, agent.function, agent.company, agent.location, agent.dateOfAffectation, agent.status, agent.name]
+  const [clients, setClients] = useState([]);
+  const dataApi = db.clients;
+  const data = dataApi.map((client) => (
+    [client.id, client.clientName, client.clientAdress, client.contract, client.contractType, client.contractStart, client.contractEnd, client.madAgents, client.status]
   ));
 
   const columns = [
-    { name: 'ID' },
-    { name: "Nom & Post-nom" },
-    { name: "Genre" },
-    { name: "Fonction" },
-    { name: "Entreprise" },
-    { name: "Lieu d'Affectation" },
-    { name: "Date d'affectation" },
+    { name: 'Id' },
+    { name: "Nom du client" },
+    { name: "Adresse client" },
+    { name: "Type de contrat" },
+    { name: "Produit(s)" },
+    { name: "date début Contrat" },
+    { name: "Date fin contrat" },
+    { name: "Nombre d'AMAD" },
     {
       name: "Status",
       options: {
         customBodyRender: (value) => (
           <p className=''>
-            {value === true ? <span className='bg-green-200 border border-green-400 text-green-600 font-semibold px-4 py-1 rounded-2xl'>Actif</span> : <span className='bg-red-400 text-white px-4 py-1 rounded-2xl'>inactif</span>}
+            {value === true ? <span className='bg-green-100 text-green-600 font-semibold px-4 py-1 rounded-xl'>En cours</span> : <span className='bg-red-100 text-red-600 font-semibold px-4 py-1 rounded-xl'>fin contrat</span>}
           </p>
         )
       }
@@ -39,7 +40,7 @@ const AllAgents = () => {
       options: {
         customBodyRender: (value) => (
           <Link to={`/${value}`}>
-            <p className='flex items-center justify-center gap-1 px-1 py-1 text-orange-500 font-semibold border border-orange-300 bg-orange-200 rounded-2xl'>
+            <p className='flex items-center justify-center gap-1 px-1 py-1 text-white bg-orange-400 rounded-xl'>
               <AiFillEye size={20} color='white' className='flex' /><span>Détails</span>
             </p>
           </Link>
@@ -54,15 +55,15 @@ const AllAgents = () => {
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 20, 50, 100, 500],
     onDownload: () => {
-      const exportData = dataApi.map((agent) => ({
-        ID: agent.id,
-        "Nom & Post-nom": agent.name,
-        Genre: agent.gender,
-        Fonction: agent.function,
-        Enteprise: agent.company,
-        "Lieu d'Affectation": agent.location,
-        "Date d'affectation": agent.dateOfAffectation,
-        Status: agent.status ? 'Actif' : 'Inactif',
+      const exportData = dataApi.map((client) => ({
+        ID: client.id,
+        "Nom & Post-nom": client.name,
+        Genre: client.gender,
+        Fonction: client.function,
+        Enteprise: client.company,
+        "Lieu d'Affectation": client.location,
+        "Date d'affectation": client.dateOfAffectation,
+        Status: client.status ? 'Actif' : 'Inactif',
       }));
       const date = new Date()
       const exportDate = date.getFullYear()
@@ -118,4 +119,4 @@ const AllAgents = () => {
   )
 }
 
-export default AllAgents;
+export default AllClients;

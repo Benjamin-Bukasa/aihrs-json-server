@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import { FaPlusCircle } from "react-icons/fa";
 import ModalAddUser from "./ModalAddUser";
 import { createNotification } from '../../../services/notificationService'; // Import du service de notification
-import { UserContext } from '../../UserContext'; // Import du contexte utilisateur
+import { UserContext } from '../../UserContext'; // Import du contexte 
+import db from "../../../db.json"
 
 const UsersResume = () => {
+  const infoData = db.notifications[0].date
   const [showModal, setShowModal] = useState(false);
   const { user } = useContext(UserContext); // Récupération de l'utilisateur connecté
   const handleClose = () => setShowModal(false);
@@ -49,8 +51,8 @@ const UsersResume = () => {
               </button>
             </p>
             <p className="py-2 flex justify-between items-center">
-              <span className="text-slate-600 font-semibold">Date du dernier enregistrement</span>
-              <span>{new Date().toLocaleString()}</span>
+              <span className="text-slate-600 font-semibold">Date de la dernière modification</span>
+              <span>{infoData}</span>
             </p>
           </div>
         </div>
