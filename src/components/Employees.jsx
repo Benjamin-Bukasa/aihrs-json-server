@@ -16,7 +16,7 @@ function Employees() {
 
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get(`http://10.5.0.26:3000/employee`, {
+      const response = await axios.get(`http://10.5.0.26:5000/employee`, {
         params: {
           q: filter,
           _page: page,

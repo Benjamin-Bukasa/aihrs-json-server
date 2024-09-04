@@ -134,7 +134,7 @@ app.delete('/entries/:id', (req, res) => {
 });
 
 // Démarrer le serveur
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Le serveur est en marche sur le port ${PORT}`);
 });

@@ -36,7 +36,7 @@ function UploadFile() {
 
       try {
         for (const entry of uniqueData) {
-          await axios.post('http://10.5.0.26:3000/entries', entry);
+          await axios.post('http://10.5.0.26:5000/entries', entry);
         }
         alert('Data successfully uploaded to db.json');
       } catch (error) {

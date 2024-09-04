@@ -16,7 +16,7 @@ const Contract = () => {
   useEffect(() => {
     const fetchAgent = async () => {
       try {
-        const response = await axios.get(`http://10.5.0.26:3000/entries`);
+        const response = await axios.get(`http://10.5.0.26:5000/entries`);
         const foundAgent = response.data.find((agent) => agent.name === name);
         setAgent(foundAgent);
       } catch (error) {
@@ -53,7 +53,7 @@ const Contract = () => {
         };
 
         try {
-          await axios.put(`http://10.5.0.26:3000/entries/${agent.id}`, updatedAgent, {
+          await axios.put(`http://10.5.0.26:5000/entries/${agent.id}`, updatedAgent, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -70,7 +70,7 @@ const Contract = () => {
       const updatedAgent = { ...agent, [modalField]: modalValue };
 
       try {
-        await axios.put(`http://10.5.0.26:3000/entries/${agent.id}`, updatedAgent, {
+        await axios.put(`http://10.5.0.26:5000/entries/${agent.id}`, updatedAgent, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -92,14 +92,14 @@ const Contract = () => {
 
     try {
       // Ajouter l'agent dans la section "archive"
-      await axios.post(`http://10.5.0.26:3000/archives`, agent, {
+      await axios.post(`http://10.5.0.26:5000/archives`, agent, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
       // Supprimer l'agent de la section "entries"
-      await axios.delete(`http://10.5.0.26:3000/entries/${agent.id}`, {
+      await axios.delete(`http://10.5.0.26:5000/entries/${agent.id}`, {
         headers: {
           'Content-Type': 'application/json',
         },

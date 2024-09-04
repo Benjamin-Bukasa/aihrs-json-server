@@ -12,7 +12,7 @@ function Employee() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    axios.get('http://10.5.0.26:3000/entries')
+    axios.get('http://10.5.0.26:5000/entries')
       .then(response => {
         setData(response.data);
       })

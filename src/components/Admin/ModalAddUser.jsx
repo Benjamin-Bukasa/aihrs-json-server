@@ -40,7 +40,7 @@ const ModalAddUser = ({ visible, onClose, onUserCreated }) => {
     }
 
     try {
-      const response = await axios.post('http://10.5.0.26:3000/users', {
+      const response = await axios.post('http://10.5.0.26:5000/users', {
         username: formData.username,
         firstName: formData.firstName,
         lastName: formData.lastName,

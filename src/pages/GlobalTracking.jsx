@@ -14,7 +14,7 @@ function GlobalTracking() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://10.5.0.26:3000/entries');
+        const response = await axios.get('http://10.5.0.26:5000/entries');
         setData(response.data);
       } catch (error) {
         console.error('Error fetching global tracking data', error);
