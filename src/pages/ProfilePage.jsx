@@ -40,7 +40,7 @@ function ProfilePage() {
 
     try {
       // Vérifier les informations de l'utilisateur
-      const response = await axios.get(`http://localhost:3000/users?username=${user.username}&password=${currentPassword}`);
+      const response = await axios.get(`http://10.5.0.26:3000/users?username=${user.username}&password=${currentPassword}`);
       if (response.data.length > 0) {
         const updatedUser = response.data[0];
         updatedUser.username = username;
@@ -52,7 +52,7 @@ function ProfilePage() {
             updatedUser.profilePhoto = reader.result;
 
             // Mettre à jour l'utilisateur dans db.json
-            await axios.put(`http://localhost:3000/users/${updatedUser.id}`, updatedUser);
+            await axios.put(`http://10.5.0.26:3000/users/${updatedUser.id}`, updatedUser);
             loginUser(updatedUser, true); // Mettre à jour le contexte utilisateur
 
             alert('Profile updated successfully');
@@ -64,7 +64,7 @@ function ProfilePage() {
 
           updatedUser.password = newPassword || updatedUser.password;
 
-          await axios.put(`http://localhost:3000/users/${updatedUser.id}`, updatedUser);
+          await axios.put(`http://10.5.0.26:3000/users/${updatedUser.id}`, updatedUser);
           loginUser(updatedUser, true); // Mettre à jour le contexte utilisateur
 
           alert('Profile updated successfully');

@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import routes from './routes';
 import { useState } from 'react';
 import './App.css';
+// import { NotificationProvider } from './NotificationContext';
 
 function App() {
   const location = useLocation();
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <UserProvider>
+      {/* <NotificationProvider> */}
       <div className="flex justify-start items-start">
         {!noNavbarSidebarRoutes.includes(location.pathname) && <Sidebar sidebarToggle={sidebarToggle} setSidebarToggle = {setSidebarToggle}/>}
         <div className={`${sidebarToggle ? "":"ml-64 transition ease-in-out delay-1500 "} w-full h-screen transition ease-in-out delay-1500`}>
@@ -24,6 +26,7 @@ function App() {
           {routing}
         </div>
       </div>
+      {/* </NotificationProvider> */}
     </UserProvider>
   );
 }

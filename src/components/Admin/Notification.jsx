@@ -161,10 +161,10 @@ const Notification = () => {
             <strong>Nom complet:</strong> {firstName} {lastName}
           </p>
           <p className="text-sm text-slate-500">
-            <strong>Email:</strong> {email || 'Inconnu'}
+            <strong>Email:</strong> {user?.email || 'Inconnu'}
           </p>
           <p className="text-sm text-slate-500">
-            <strong>Rôle:</strong> {role || 'Inconnu'}
+            <strong>Rôle:</strong> {user?.role || 'Inconnu'}
           </p>
           <p className="text-sm text-slate-500 mt-4">
             <strong>Détails de la notification:</strong> {selectedNotification.message}

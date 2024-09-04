@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/notifications';
+const API_URL = 'http://10.5.0.26:3000/notifications';
 
 /**
  * Créer une nouvelle notification

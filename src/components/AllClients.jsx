@@ -98,7 +98,7 @@ const AllClients = () => {
   });
 
   useEffect(() => {
-    fetch('http://localhost:3000/entries')
+    fetch('http://10.5.0.26:3000/entries')
       .then((res) => res.json())
       .then((dataApi) => {
         setAgents(dataApi?.id);

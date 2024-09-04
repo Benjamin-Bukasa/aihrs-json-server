@@ -16,7 +16,7 @@ const Contract = () => {
   useEffect(() => {
     const fetchAgent = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/entries`);
+        const response = await axios.get(`http://10.5.0.26:3000/entries`);
         const foundAgent = response.data.find((agent) => agent.name === name);
         setAgent(foundAgent);
       } catch (error) {
@@ -53,7 +53,7 @@ const Contract = () => {
         };
 
         try {
-          await axios.put(`http://localhost:3000/entries/${agent.id}`, updatedAgent, {
+          await axios.put(`http://10.5.0.26:3000/entries/${agent.id}`, updatedAgent, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -70,7 +70,7 @@ const Contract = () => {
       const updatedAgent = { ...agent, [modalField]: modalValue };
 
       try {
-        await axios.put(`http://localhost:3000/entries/${agent.id}`, updatedAgent, {
+        await axios.put(`http://10.5.0.26:3000/entries/${agent.id}`, updatedAgent, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -92,14 +92,14 @@ const Contract = () => {
 
     try {
       // Ajouter l'agent dans la section "archive"
-      await axios.post(`http://localhost:3000/archives`, agent, {
+      await axios.post(`http://10.5.0.26:3000/archives`, agent, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
       // Supprimer l'agent de la section "entries"
-      await axios.delete(`http://localhost:3000/entries/${agent.id}`, {
+      await axios.delete(`http://10.5.0.26:3000/entries/${agent.id}`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -187,6 +187,15 @@ const Contract = () => {
               <p className="w-1/2 text-slate-500">{agent.netSalary}</p>
             </div>
             <button onClick={() => handleOpenModal('netSalary', agent.netSalary)} className='text-orange-500 font-semibold'>Modifier</button>
+          </div>
+        </div>
+        <div className="w-full flex flex-col py-2 text-[14px]">
+          <div className="flex justify-between items-center pr-2">
+            <div className="w-2/3 flex justify-start gap-8 items-center py-2">
+              <p className="w-1/2 font-semibold text-slate-600">Salaire Net versé ce mois</p>
+              <p className="w-1/2 text-slate-500">{agent.latestSalaries}</p>
+            </div>
+            <button onClick={() => handleOpenModal('latestSalaries', agent.latestSalaries)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
         <div className="w-full flex flex-col py-2 text-[14px]">

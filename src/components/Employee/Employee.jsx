@@ -12,7 +12,7 @@ function Employee() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/entries')
+    axios.get('http://10.5.0.26:3000/entries')
       .then(response => {
         setData(response.data);
       })
@@ -23,7 +23,7 @@ function Employee() {
 
   const handleDelete = (id) => {
     if (window.confirm("Voulez-vous supprimer cet élément?")) {
-      axios.delete(`http://localhost:500/entries/${id}`)
+      axios.delete(`http://10.5.0.26:500/entries/${id}`)
         .then(response => {
           setData(data.filter(item => item.id !== id));
         })

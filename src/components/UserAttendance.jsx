@@ -29,16 +29,11 @@ const calculateTotal = (data) => {
   let total200 = 0;
 
   data.forEach((row) => {
-    total130 += parseFloat(row.hours130);
-    total160 += parseFloat(row.hours160);
-    total25 += parseFloat(row.hours25);
-    total200 += parseFloat(row.hours200);
+    total130 += parseFloat(row.hours130) || 0;
+    total160 += parseFloat(row.hours160) || 0;
+    total25 += parseFloat(row.hours25) || 0;
+    total200 += parseFloat(row.hours200) || 0;
   });
-
-  if (total130 > 6) {
-    total160 += total130 - 6;
-    total130 = 6;
-  }
 
   return { total130, total160, total25, total200 };
 };
@@ -49,7 +44,6 @@ function UserAttendance() {
   const [employeeName, setEmployeeName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [weeklyTotals, setWeeklyTotals] = useState([]);
   const [grandTotal, setGrandTotal] = useState(null);
 
   const handleAdd = () => {
@@ -67,30 +61,16 @@ function UserAttendance() {
     const isHoliday = isHolidayInDRC(date);
 
     if (isWeekend || isHoliday) {
-      hours200 = totalHours;
+      hours200 = parseFloat(totalHours) || 0;
     } else if (totalHours > 8.5) {
-      const overtime = (totalHours - 8.5).toFixed(2);
-      const endOfRegularHours = new Date(`1970-01-01T16:30:00`);
-      const startOfExtraHours = new Date(`1970-01-01T19:00:00`);
+      const overtime = totalHours - 8.5;
 
-      if (start < endOfRegularHours) {
-        const regularHours = (
-          (endOfRegularHours - start) /
-          (1000 * 60 * 60)
-        ).toFixed(2);
-        hours130 = Math.min(overtime, 2.5, regularHours).toFixed(2);
-      }
-
-      if (end > startOfExtraHours) {
-        const extraHours = (
-          (end - startOfExtraHours) /
-          (1000 * 60 * 60)
-        ).toFixed(2);
-        hours25 = Math.max(0, extraHours).toFixed(2);
-      }
-
-      if (totalHours - 8.5 > 6) {
-        hours160 = (totalHours - 8.5 - 6).toFixed(2);
+      if (overtime > 0) {
+        hours130 = Math.min(overtime, 2.5);
+        if (overtime > 2.5) {
+          hours160 = Math.min(overtime - 2.5, 3.5);
+          hours25 = Math.max(overtime - 6, 0);
+        }
       }
     }
 
@@ -101,11 +81,11 @@ function UserAttendance() {
         employeeName,
         startTime,
         endTime,
-        totalHours,
-        hours130,
-        hours160,
-        hours25,
-        hours200,
+        totalHours: parseFloat(totalHours).toFixed(2),
+        hours130: parseFloat(hours130).toFixed(2),
+        hours160: parseFloat(hours160).toFixed(2),
+        hours25: parseFloat(hours25).toFixed(2),
+        hours200: parseFloat(hours200).toFixed(2),
       },
     ]);
   };
@@ -124,24 +104,18 @@ function UserAttendance() {
     handleDelete(index);
   };
 
-  const handleCalculateWeeklyTotals = () => {
-    const newWeeklyTotals = [];
-    let currentWeek = [];
-
+  const handleCalculateTotals = () => {
+    let grandTotal = { total130: 0, total160: 0, total25: 0, total200: 0 };
     data.forEach((row, index) => {
-      currentWeek.push(row);
-
-      if ((index + 1) % 7 === 0 || index === data.length - 1) {
-        const weekTotal = calculateTotal(currentWeek);
-        newWeeklyTotals.push(weekTotal);
-        currentWeek = [];
+      if ((index + 1) % 5 === 0 || index === data.length - 1) {
+        const segmentTotal = calculateTotal(data.slice(index - 4, index + 1));
+        grandTotal.total130 += segmentTotal.total130;
+        grandTotal.total160 += segmentTotal.total160;
+        grandTotal.total25 += segmentTotal.total25;
+        grandTotal.total200 += segmentTotal.total200;
       }
     });
-
-    setWeeklyTotals(newWeeklyTotals);
-
-    const total = calculateTotal(newWeeklyTotals);
-    setGrandTotal(total);
+    setGrandTotal(grandTotal);
   };
 
   const exportToExcel = () => {
@@ -228,7 +202,7 @@ function UserAttendance() {
             type="time"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
-            className="border p-2 rounded w-full  outline-none"
+            className="border p-2 rounded w-full outline-none"
           />
         </label>
         <button
@@ -253,7 +227,7 @@ function UserAttendance() {
           <FaFilePdf className="mr-2" /> Exporter en PDF
         </button>
         <button
-          onClick={handleCalculateWeeklyTotals}
+          onClick={handleCalculateTotals}
           className="bg-green-500 text-white p-2 rounded flex items-center"
         >
           Calculer les Totaux
@@ -284,19 +258,19 @@ function UserAttendance() {
                 <td className="border p-2">{row.startTime}</td>
                 <td className="border p-2">{row.endTime}</td>
                 <td className="border p-2">
-                  {parseFloat(row.totalHours).toFixed(2)}
+                  {row.totalHours && !isNaN(row.totalHours) ? parseFloat(row.totalHours).toFixed(2) : "0.00"}
                 </td>
                 <td className="border p-2">
-                  {parseFloat(row.hours130).toFixed(2)}
+                  {row.hours130 && !isNaN(row.hours130) ? parseFloat(row.hours130).toFixed(2) : "0.00"}
                 </td>
                 <td className="border p-2">
-                  {parseFloat(row.hours160).toFixed(2)}
+                  {row.hours160 && !isNaN(row.hours160) ? parseFloat(row.hours160).toFixed(2) : "0.00"}
                 </td>
                 <td className="border p-2">
-                  {parseFloat(row.hours25).toFixed(2)}
+                  {row.hours25 && !isNaN(row.hours25) ? parseFloat(row.hours25).toFixed(2) : "0.00"}
                 </td>
                 <td className="border p-2">
-                  {parseFloat(row.hours200).toFixed(2)}
+                  {row.hours200 && !isNaN(row.hours200) ? parseFloat(row.hours200).toFixed(2) : "0.00"}
                 </td>
                 <td className="border p-2 flex justify-center space-x-2">
                   <button
@@ -313,7 +287,7 @@ function UserAttendance() {
                   </button>
                 </td>
               </tr>
-              {(index + 1) % 7 === 0 && (
+              {(index + 1) % 5 === 0 && (
                 <tr className="font-bold bg-gray-100">
                   <td className="border p-2">Total Semaine</td>
                   <td className="border p-2"></td>
@@ -321,16 +295,16 @@ function UserAttendance() {
                   <td className="border p-2"></td>
                   <td className="border p-2"></td>
                   <td className="border p-2">
-                    {calculateTotal(data.slice(index - 6, index + 1)).total130.toFixed(2)}
+                    {calculateTotal(data.slice(index - 4, index + 1)).total130.toFixed(2)}
                   </td>
                   <td className="border p-2">
-                    {calculateTotal(data.slice(index - 6, index + 1)).total160.toFixed(2)}
+                    {calculateTotal(data.slice(index - 4, index + 1)).total160.toFixed(2)}
                   </td>
                   <td className="border p-2">
-                    {calculateTotal(data.slice(index - 6, index + 1)).total25.toFixed(2)}
+                    {calculateTotal(data.slice(index - 4, index + 1)).total25.toFixed(2)}
                   </td>
                   <td className="border p-2">
-                    {calculateTotal(data.slice(index - 6, index + 1)).total200.toFixed(2)}
+                    {calculateTotal(data.slice(index - 4, index + 1)).total200.toFixed(2)}
                   </td>
                   <td className="border p-2"></td>
                 </tr>

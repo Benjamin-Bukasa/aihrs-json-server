@@ -51,7 +51,7 @@ function AdminDashboard() {
       <div className="w-1/2 h-full flex flex-col justify-center gap-1 p-4 bg-white border rounded-xl shadow-custom-light">
           {/* <UploadFile/> */}
           {/* <AllAgents/> */}
-          <div className="w-full flex items-center jusitfy-center gap-1 h-1/2">
+          {/* <div className="w-full flex items-center jusitfy-center gap-1 h-1/2">
             <div className="w-1/2 h-full p-2 bg-gradient-to-l from-[#EE4A3C] to-[#FAA336] rounded-xl text-white/75 font-semibold">
             Total
             </div>
@@ -66,7 +66,7 @@ function AdminDashboard() {
             <div className="w-1/2 h-full p-2 bg-gradient-to-r from-[#74E9A3] to-[#086A38] rounded-xl text-white/75 font-semibold">
             Total
             </div>
-          </div>
+          </div> */}
       </div>
     </div>
     </>

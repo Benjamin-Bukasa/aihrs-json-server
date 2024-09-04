@@ -28,7 +28,7 @@ function FirstTimePasswordResetPage() {
     }
     try {
       console.log(`Fetching user: ${user.username}`);
-      const response = await axios.get(`http://localhost:5000/users?username=${user.username}`);
+      const response = await axios.get(`http://10.5.0.26:3000/users?username=${user.username}`);
       console.log('Response:', response);
       if (response.data.length > 0) {
         const fetchedUser = response.data[0];
@@ -40,7 +40,7 @@ function FirstTimePasswordResetPage() {
 
         const updatedUser = { ...fetchedUser, password: newPassword, mustResetPassword: false };
         console.log('Updating user:', updatedUser);
-        const putResponse = await axios.put(`http://localhost:5000/users/${fetchedUser.id}`, updatedUser);
+        const putResponse = await axios.put(`http://10.5.0.26:3000/users/${fetchedUser.id}`, updatedUser);
         console.log('PUT Response:', putResponse);
         loginUser(updatedUser, rememberMe);
         alert('Password reset successfully. You are now logged in.');
