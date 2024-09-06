@@ -31,7 +31,7 @@ const CompanyResume = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://10.5.0.26:5000/clients', formData);
+      await axios.post('http://localhost:5000/clients', formData);
       setShowModal(false);
       // Optionnel : ajouter une logique pour rafraîchir la liste des clients ou afficher une notification
     } catch (error) {

@@ -16,7 +16,7 @@ function Employees() {
 
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get(`http://10.5.0.26:5000/employee`, {
+      const response = await axios.get(`http://localhost:5000/employee`, {
         params: {
           q: filter,
           _page: page,
@@ -60,7 +60,7 @@ function Employees() {
       });
 
       try {
-        await axios.post('http://10.5.0.26:3001/employee', uniqueData);
+        await axios.post('http://localhost:3001/employee', uniqueData);
         alert('Data successfully uploaded to db.json');
         fetchEmployees();
       } catch (error) {

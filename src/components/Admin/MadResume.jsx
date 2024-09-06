@@ -47,7 +47,7 @@ const MadResume = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://10.5.0.26:5000/entries', formData);
+      const response = await axios.post('http://localhost:5000/entries', formData);
 
       // Créer une notification après l'ajout de l'agent
       await createNotification({

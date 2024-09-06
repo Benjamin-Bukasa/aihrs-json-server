@@ -14,7 +14,7 @@ const Notification = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [notificationsPerPage] = useState(5);
 
-  const { role, email, firstName, lastName } = useContext(UserContext);
+  const { user, role, email, firstName, lastName } = useContext(UserContext);
 
   useEffect(() => {
     fetchNotifications();
@@ -54,8 +54,8 @@ const Notification = () => {
 
   const filterNotifications = () => {
     const filtered = notifications.filter(notification =>
-      notification.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      notification.message.toLowerCase().includes(searchTerm.toLowerCase())
+      (notification.action && notification.action.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (notification.message && notification.message.toLowerCase().includes(searchTerm.toLowerCase()))
     );
     setFilteredNotifications(filtered);
   };

@@ -19,7 +19,7 @@ const Infos = () => {
   useEffect(() => {
     const fetchAgent = async () => {
       try {
-        const response = await axios.get(`http://10.5.0.26:5000/entries`);
+        const response = await axios.get(`http://localhost:5000/entries`);
         const foundAgent = response.data.find((agent) => agent.name === name);
         setAgent(foundAgent);
       } catch (error) {
@@ -58,7 +58,7 @@ const Infos = () => {
         };
 
         try {
-          await axios.put(`http://10.5.0.26:5000/entries/${agent.id}`, updatedAgent, {
+          await axios.put(`http://localhost:5000/entries/${agent.id}`, updatedAgent, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -83,7 +83,7 @@ const Infos = () => {
       updatedAgent = { ...agent, [modalField]: modalValue };
 
       try {
-        await axios.put(`http://10.5.0.26:5000/entries/${agent.id}`, updatedAgent, {
+        await axios.put(`http://localhost:5000/entries/${agent.id}`, updatedAgent, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -113,19 +113,23 @@ const Infos = () => {
     if (!agent) return;
 
     try {
-      // Ajouter l'agent dans la section "archive"
-      await axios.post(`http://10.5.0.26:5000/archives`, agent, {
+      console.log("Archiving agent:", agent);
+
+      // Ajouter l'agent dans la section "archives"
+      const archiveResponse = await axios.post(`http://localhost:5000/archives`, agent, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      console.log("Archive response:", archiveResponse);
 
       // Supprimer l'agent de la section "entries"
-      await axios.delete(`http://10.5.0.26:5000/entries/${agent.id}`, {
+      const deleteResponse = await axios.delete(`http://localhost:5000/entries/${agent.id}`, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      console.log("Delete response:", deleteResponse);
 
       // Créer une notification pour l'archivage de l'agent
       await createNotification({
@@ -165,10 +169,10 @@ const Infos = () => {
             <button onClick={() => setShowArchiveModal(true)} className="px-4 py-2 bg-red-400 font-semibold text-white rounded-2xl">Archiver</button>
           </div>
         </div>
-        
-        {/* Affichage des informations */}
-        {/* Nom complet */}
+
+        {/* Informations Agent */}
         <div className="w-full flex flex-col py-2 text-[14px]">
+          {/* Nom complet */}
           <div className="flex justify-between items-center pr-2">
             <div className="w-2/3 flex justify-start gap-8 items-center py-2">
               <p className="w-1/2 font-semibold text-slate-600">Nom complet</p>
@@ -177,6 +181,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('name', agent.name)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+
         {/* Genre */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
@@ -187,6 +192,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('gender', agent.gender)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+
         {/* Lieu et date de naissance */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
@@ -197,6 +203,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('placeOfBirth', agent.placeOfBirth)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+
         {/* État Civil */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
@@ -207,6 +214,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('matrimonial', agent.matrimonial)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+
         {/* Nombre d'enfants */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
@@ -217,6 +225,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('children', agent.children)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+
         {/* Adresse Domicile */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-between items-center pr-2">
@@ -227,6 +236,7 @@ const Infos = () => {
             <button onClick={() => handleOpenModal('adress', agent.adress)} className='text-orange-500 font-semibold'>Modifier</button>
           </div>
         </div>
+
         {/* Voir contrat */}
         <div className="w-full flex flex-col py-2 text-[14px]">
           <div className="flex justify-end items-center pr-2">

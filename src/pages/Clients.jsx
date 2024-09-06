@@ -4,7 +4,7 @@ import AllClients from '../components/AllClients'
 function Clients() {
   return (
     <div>
-      
+      <AllClients/>
     </div>
   )
 }
