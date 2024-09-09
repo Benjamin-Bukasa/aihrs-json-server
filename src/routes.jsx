@@ -40,6 +40,16 @@ function AdminRoute({ element }) {
   return user && user.role === 'admin' ? element : <Navigate to="/login" />;
 }
 
+function UserRoute({ element }) {
+  const { user, loading } = useContext(UserContext);
+
+  if (loading) {
+    return <div>Loading...</div>; // Indicateur de chargement pendant la vérification de l'authentification
+  }
+
+  return user && user.role === 'utilisateur' || user.role === 'admin' ?  element : <Navigate to="/login" />;
+}
+
 const routes = [
   { path: '/', element: <Navigate to="/dashboard" /> },
   { path: '/login', element: <LoginPage /> },
@@ -58,7 +68,7 @@ const routes = [
   { path: '/add-user', element: <AdminRoute element={<AddUserPage />} /> },
   { 
     path: '/:name',
-    element: <AdminRoute element={<User />} />,
+    element: <UserRoute element={<User />} />,
     children:[
       {
         path: '/:name',
