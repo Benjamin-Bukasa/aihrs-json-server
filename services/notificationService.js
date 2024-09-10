@@ -32,9 +32,23 @@ export const getNotifications = async () => {
 };
 
 /**
+ * Récupérer toutes les notifications non lues
+ * @returns {Promise} - La promesse axios pour la requête GET filtrée par viewed=false
+ */
+export const getUnreadNotifications = async () => {
+  try {
+    const response = await axios.get(`${API_URL}?viewed=false`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des notifications non lues:", error);
+    throw error;
+  }
+};
+
+/**
  * Mettre à jour le statut d'une notification
  * @param {string} notificationId - L'ID de la notification à mettre à jour
- * @param {Object} status - L'objet contenant le nouveau statut
+ * @param {Object} status - L'objet contenant le nouveau statut (par ex. { viewed: true })
  * @returns {Promise} - La promesse axios pour la requête PATCH
  */
 export const updateNotificationStatus = async (notificationId, status) => {
@@ -43,6 +57,21 @@ export const updateNotificationStatus = async (notificationId, status) => {
     return response.data;
   } catch (error) {
     console.error("Erreur lors de la mise à jour de la notification", error);
+    throw error;
+  }
+};
+
+/**
+ * Supprimer une notification
+ * @param {string} notificationId - L'ID de la notification à supprimer
+ * @returns {Promise} - La promesse axios pour la requête DELETE
+ */
+export const deleteNotification = async (notificationId) => {
+  try {
+    const response = await axios.delete(`${API_URL}/${notificationId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la suppression de la notification", error);
     throw error;
   }
 };

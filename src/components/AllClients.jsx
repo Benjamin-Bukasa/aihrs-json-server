@@ -30,7 +30,7 @@ const AllClients = () => {
       options: {
         customBodyRender: (value) => (
           <p className=''>
-            {value === true ? <span className='bg-green-100 text-green-600 font-semibold px-4 py-1 rounded-xl'>En cours</span> : <span className='bg-red-100 text-red-600 font-semibold px-4 py-1 rounded-xl'>fin contrat</span>}
+            {value === true ? <span className='bg-green-100 text-green-600 font-semibold px-4 py-1 rounded-xl'>Client</span> : <span className='bg-red-100 text-red-600 font-semibold px-4 py-1 rounded-xl'>fin contrat</span>}
           </p>
         )
       }

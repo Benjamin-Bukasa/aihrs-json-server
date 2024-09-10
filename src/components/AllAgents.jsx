@@ -29,7 +29,7 @@ const AllAgents = () => {
       options: {
         customBodyRender: (value) => (
           <p className=''>
-            {value === true ? <span className='bg-green-200 border border-green-400 text-green-600 font-semibold px-4 py-1 rounded-2xl'>Actif</span> : <span className='bg-red-400 text-white px-4 py-1 rounded-2xl'>inactif</span>}
+            {value === true ? <span className='bg-green-100 text-green-600 font-semibold px-4 py-1 rounded-xl'>Actif</span> : <span className='bg-red-400 text-white px-4 py-1 rounded-2xl'>inactif</span>}
           </p>
         )
       }

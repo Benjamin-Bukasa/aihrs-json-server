@@ -6,10 +6,10 @@ import db from "../../../db.json"
 
 
 const TotalAgents = ({title,total}) => {
-  const infoData = db.notifications[0].date.slice(0,10)
   const dateNow = Date.now()
   const date = new Date(dateNow)
-  const formatDate = format(date, 'dd/MM/yyyy hh:mm a')
+  const formatDate = format(date, 'dd/MM/yyyy')
+  const infoData = formatDate
 
   
 

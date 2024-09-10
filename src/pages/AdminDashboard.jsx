@@ -18,6 +18,7 @@ function AdminDashboard() {
   const dataProvinceLength = dataProvince.length
   const dataInactif = Data.entries.filter(agent=>agent.status ===false)
   const dataAgentInactif = dataInactif.length
+  const actifAgents = data.length
 
   return (
     <>
@@ -51,22 +52,26 @@ function AdminDashboard() {
       <div className="w-1/2 h-full flex flex-col justify-center gap-1 p-4 bg-white border rounded-xl shadow-custom-light">
           {/* <UploadFile/> */}
           {/* <AllAgents/> */}
-          {/* <div className="w-full flex items-center jusitfy-center gap-1 h-1/2">
-            <div className="w-1/2 h-full p-2 bg-gradient-to-l from-[#EE4A3C] to-[#FAA336] rounded-xl text-white/75 font-semibold">
-            Total
+          <div className="w-full flex items-center jusitfy-center gap-1 h-1/2">
+            <div className="w-1/2 h-full px-4 py-2 bg-gradient-to-l from-[#EE4A3C] to-[#FAA336] rounded-xl text-white/75 font-semibold">
+              <div className="flex items-center justify-between">
+                <p className="w-1/2 text-lg text-left">Effectif agents MAD</p>
+                <p className="text-2xl text-right">{actifAgents}</p>
+              </div>
+              <div className></div>
             </div>
-            <div className="w-1/2 h-full p-2 bg-gradient-to-r from-[#A90CC4] to-[#4F059D] rounded-xl text-white/75 font-semibold">
+            <div className="w-1/2 h-full px-4 py-2 bg-gradient-to-r from-[#A90CC4] to-[#4F059D] rounded-xl text-white/75 font-semibold">
             Total
             </div>
           </div>
           <div className="w-full flex items-center jusitfy-center gap-1 h-1/2">
-            <div className="w-1/2 h-full p-2 bg-gradient-to-r from-[#0C98C4] to-[#28059D] rounded-xl text-white/75 font-semibold">
+            <div className="w-1/2 h-full px-4 py-2 bg-gradient-to-r from-[#0C98C4] to-[#28059D] rounded-xl text-white/75 font-semibold">
             Total
             </div>
-            <div className="w-1/2 h-full p-2 bg-gradient-to-r from-[#74E9A3] to-[#086A38] rounded-xl text-white/75 font-semibold">
+            <div className="w-1/2 h-full px-4 py-2 bg-gradient-to-r from-[#74E9A3] to-[#086A38] rounded-xl text-white/75 font-semibold">
             Total
             </div>
-          </div> */}
+          </div>
       </div>
     </div>
     </>

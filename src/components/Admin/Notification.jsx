@@ -27,10 +27,21 @@ const Notification = () => {
   const fetchNotifications = async () => {
     try {
       const data = await getNotifications();
-
-      // Trier les notifications par date en ordre décroissant (du plus récent au plus ancien)
       const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-      setNotifications(sortedData);
+
+      // Charger les notifications vues depuis localStorage
+      const viewedNotifications = JSON.parse(localStorage.getItem(`viewedNotifications_${user.id}`)) || {};
+
+      const updatedNotifications = sortedData.map(notification => {
+        // Si notification non vue dans la session actuelle, la marquer comme non vue même si viewed est true
+        if (viewedNotifications[notification.id]) {
+          return { ...notification, viewed: true };
+        } else {
+          return { ...notification, viewed: false };
+        }
+      });
+
+      setNotifications(updatedNotifications);
     } catch (error) {
       console.error('Erreur lors de la récupération des notifications:', error);
     }
@@ -39,6 +50,7 @@ const Notification = () => {
   const handleViewDetails = (notification) => {
     setSelectedNotification(notification);
 
+    // Si la notification n'a pas été vue, mettre à jour l'état et stocker dans localStorage
     if (!notification.viewed) {
       updateNotificationStatus(notification.id, { viewed: true })
         .then(() => {
@@ -47,6 +59,11 @@ const Notification = () => {
               notif.id === notification.id ? { ...notif, viewed: true } : notif
             )
           );
+          
+          // Sauvegarder l'état vu dans localStorage
+          const viewedNotifications = JSON.parse(localStorage.getItem(`viewedNotifications_${user.id}`)) || {};
+          viewedNotifications[notification.id] = true;
+          localStorage.setItem(`viewedNotifications_${user.id}`, JSON.stringify(viewedNotifications));
         })
         .catch(error => console.error('Erreur lors de la mise à jour de la notification:', error));
     }
