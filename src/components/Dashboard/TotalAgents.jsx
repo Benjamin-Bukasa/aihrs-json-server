@@ -11,7 +11,6 @@ const TotalAgents = ({title,total}) => {
   const formatDate = format(date, 'dd/MM/yyyy')
   const infoData = formatDate
 
-  
 
   return (
     <div className='lg:w-1/3 h-full flex flex-col justify-start items-start shadow-custom-light text-[#4d4d4d] rounded-3xl overflow-hidden sm:w-full border'>
@@ -22,7 +21,7 @@ const TotalAgents = ({title,total}) => {
             </span>
           <p className="font-medium text-md text-gray-500">{title}</p>
           </Link>
-          <p className=" p-2 bg-gray-200 text-gray-500 w-20 text-end rounded-3xl font-bold text-lg">{total}</p>
+          <p className=" p-2 bg-green-100 text-green-500 w-20 text-end rounded-3xl font-bold text-lg">+{total}</p>
         </div>
         <div className="w-full h-1/2 px-8 py-2 bg-white">
             <div className="divide-y">

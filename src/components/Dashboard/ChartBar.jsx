@@ -9,26 +9,26 @@ import { format } from 'date-fns';
 const ChartBar = () => {
 
 const data = Data.entries
-const dataAnneePassee = data.filter((employee)=>employee.annee === 2023)
-const dataAnneeEnCours = data.filter((employee)=>employee.annee === 2024)
+const dataAnneePassee = data.filter((employee)=>employee.location === "Kinshasa")
+const dataAnneeEnCours = data.filter((employee)=>employee.location !== "Kinshasa")
 const totalAnneePassee = dataAnneePassee.length
 const totalAnneeEnCours = dataAnneeEnCours.length
-
 
   return (
     <div className='w-full h-full flex justify-center shadow-custom-light border rounded-xl'>
         <Bar
           data = {{
-            labels:["2023","2024"],
+            labels:["2023"],
             datasets:[
               {
-                label:"Total agent 2023",
+                label:"Total agent Kinshasa",
                 data:[totalAnneePassee],
               },{
-                label:"Total agent 2024",
+                label:"Total agent Province",
                 data:[totalAnneeEnCours],
-              }
+              },
             ]
+            
           }}
         />
     </div>

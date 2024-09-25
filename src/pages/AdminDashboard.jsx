@@ -12,9 +12,9 @@ function AdminDashboard() {
   const displayRole = role === 'admin' ? 'Administrateur': 'Utilisateur'
 
   const data = Data.entries
-  const dataKinshasa = Data.entries.filter(agent=>agent.lieuAffectation ==="Kinshasa")
+  const dataKinshasa = Data.entries.filter(agent=>agent.location ==="Kinshasa")
   const dataKinshasaLenght = dataKinshasa.length
-  const dataProvince = Data.entries.filter(agent=>agent.lieuAffectation !=="Kinshasa")
+  const dataProvince = Data.entries.filter(agent=>agent.location !=="Kinshasa")
   const dataProvinceLength = dataProvince.length
   const dataInactif = Data.entries.filter(agent=>agent.status ===false)
   const dataAgentInactif = dataInactif.length
@@ -56,7 +56,7 @@ function AdminDashboard() {
             <div className="w-1/2 h-full px-4 py-2 bg-gradient-to-l from-[#EE4A3C] to-[#FAA336] rounded-xl text-white/75 font-semibold">
               <div className="flex items-center justify-between">
                 <p className="w-1/2 text-lg text-left">Effectif agents MAD</p>
-                <p className="text-2xl text-right">{actifAgents}</p>
+                <p className="text-2xl text-right flex flex-col">{actifAgents}<span className="text-lg">agents</span></p>
               </div>
               <div className></div>
             </div>
