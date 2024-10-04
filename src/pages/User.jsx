@@ -25,7 +25,6 @@ function User() {
           <ul className="w-full flex justify-center divide-x ">
             <Link to={`/${user.name}/infos`}className='flex justify-start items-center gap-2 px-10 py-2 text-slate-400 hover:text-slate-600'><li className="font-medium active:text-orange-500 text-[14px]">Information générale</li></Link>
             <Link to={`/${user.name}/contract`} className='flex justify-start items-center gap-2 px-10 py-2 text-slate-400 hover:text-slate-600'><li className="font-medium active:text-orange-500 text-[14px]">Contrat</li></Link>
-            <Link to={`/${user.name}/report`} className='flex justify-start items-center gap-2 px-10 py-2 text-slate-400 hover:text-slate-600'><li className="font-medium active:text-orange-500 text-[14px]">Indicateurs</li></Link>
             <Link to={`/${user.name}/pointage`} className='flex justify-start items-center gap-2 px-10 py-2 text-slate-400 hover:text-slate-600'><li className="font-medium active:text-orange-500 text-[14px]">Absence et Congé</li></Link>
             <Link to={`/${user.name}/report`} className='flex justify-start items-center gap-2 px-10 py-2 text-slate-400 hover:text-slate-600'><li className="font-medium active:text-orange-500 text-[14px]">Actions Disciplinaires</li></Link>
             <Link to={`/${user.name}/report`} className='flex justify-start items-center gap-2 px-10 py-2 text-slate-400 hover:text-slate-600'><li className="font-medium active:text-orange-500 text-[14px]">Reporting</li></Link>

@@ -1,6 +1,17 @@
 import React from 'react'
+import {useParams} from 'react-router-dom'
+import db from '../../db.json'
 
 const Client = () => {
+
+  const { clientName } = useParams();
+  const filter = db.clients.filter((item) => {
+    return item.clientName === clientName;
+  });
+  const client = db.client.find(
+    (client) => client.clientName === clientName
+  );
+
   return (
     <div>
       <div className="w-full bg-white">
