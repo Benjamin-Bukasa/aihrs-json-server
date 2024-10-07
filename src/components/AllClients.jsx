@@ -13,7 +13,7 @@ const AllClients = () => {
   const [clients, setClients] = useState([]);
   const dataApi = db.clients;
   const data = dataApi.map((client) => (
-    [client.id, client.clientName, client.clientAdress, client.contract, client.contractType, client.contractStart, client.contractEnd, client.madAgents, client.status]
+    [client.id, client.clientName, client.clientAdress, client.contract, client.contractType, client.contractStart, client.contractEnd, client.madAgents, client.status, client.clientName]
   ));
 
   const columns = [
@@ -98,10 +98,10 @@ const AllClients = () => {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/entries')
+    fetch('http://localhost:5000/clients')
       .then((res) => res.json())
       .then((dataApi) => {
-        setAgents(dataApi?.id);
+        setClients(dataApi?.id);
       });
   }, []);
 

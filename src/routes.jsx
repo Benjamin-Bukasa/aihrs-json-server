@@ -90,24 +90,25 @@ const routes = [
         path: '/:name/report',
         element: '',
       },
+      
     ]
   },
 
   { 
     path: '/:clientName',
-    element: <AdminRoute element={<Client />} />,
+    element: <UserRoute element={<Client />} />,
     children:[
       {
         path: '/:clientName',
-        element: <Infos />,
+        element: <Client/>,
       },
       {
         path: '/:clientName/infos',
-        element: <Infos />,
+        element: <Client />,
       },
       {
         path: '/:clientName/contract',
-        element: <Contract/>,
+        element: <Client/>,
       },
       {
         path: '/:clientName/stats',

@@ -1,5 +1,5 @@
 import React from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, Link, Outlet} from 'react-router-dom'
 import db from '../../db.json'
 
 const Client = () => {
@@ -8,7 +8,7 @@ const Client = () => {
   const filter = db.clients.filter((item) => {
     return item.clientName === clientName;
   });
-  const client = db.client.find(
+  const client = db.clients.find(
     (client) => client.clientName === clientName
   );
 
@@ -16,7 +16,7 @@ const Client = () => {
     <div>
       <div className="w-full bg-white">
         <div className='w-full p-2'>
-          <p className="text-[18px] text-slate-500 p-2">Details de l'agent: <span className='text-orange-500 font-extrabold'>{client.clientName}</span></p>
+          <p className="text-[18px] text-slate-500 p-2">Details du client: <span className='text-orange-500 font-extrabold'>{client.clientName}</span></p>
         </div>
         <div className="w-full rounded-xl p-2 divide-y">
           <ul className="w-full flex justify-center divide-x ">
