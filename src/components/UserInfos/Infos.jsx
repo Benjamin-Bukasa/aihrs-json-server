@@ -19,7 +19,7 @@ const Infos = () => {
   useEffect(() => {
     const fetchAgent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/entries`);
+        const response = await axios.get(`http://10.5.0.26:5000/entries`);
         const foundAgent = response.data.find((agent) => agent.name === name);
         setAgent(foundAgent);
       } catch (error) {
@@ -58,7 +58,7 @@ const Infos = () => {
         };
 
         try {
-          await axios.put(`http://localhost:5000/entries/${agent.id}`, updatedAgent, {
+          await axios.put(`http://10.5.0.26:5000/entries/${agent.id}`, updatedAgent, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -83,7 +83,7 @@ const Infos = () => {
       updatedAgent = { ...agent, [modalField]: modalValue };
 
       try {
-        await axios.put(`http://localhost:5000/entries/${agent.id}`, updatedAgent, {
+        await axios.put(`http://10.5.0.26:5000/entries/${agent.id}`, updatedAgent, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -116,7 +116,7 @@ const Infos = () => {
       console.log("Archiving agent:", agent);
 
       // Ajouter l'agent dans la section "archives"
-      const archiveResponse = await axios.post(`http://localhost:5000/archives`, agent, {
+      const archiveResponse = await axios.post(`http://10.5.0.26:5000/archives`, agent, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -124,7 +124,7 @@ const Infos = () => {
       console.log("Archive response:", archiveResponse);
 
       // Supprimer l'agent de la section "entries"
-      const deleteResponse = await axios.delete(`http://localhost:5000/entries/${agent.id}`, {
+      const deleteResponse = await axios.delete(`http://10.5.0.26:5000/entries/${agent.id}`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -260,7 +260,7 @@ const Infos = () => {
                 className="w-full p-2 border border-gray-300 rounded-lg"
               />
             )}
-            <div className="flex justify-end gap-4 mt-4">
+            <div className="flex justify-end gap-4 mt-4">npm audit fix --for
               <button onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-300 rounded-lg">Annuler</button>
               <button onClick={handleSaveField} className="px-4 py-2 bg-orange-500 text-white rounded-lg">Sauvegarder</button>
             </div>

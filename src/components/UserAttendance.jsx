@@ -172,7 +172,7 @@ function UserAttendance() {
           hours200: row.hours200 || 0
         };
 
-        await axios.post("http://localhost:5000/pointage", payload);
+        await axios.post("http://10.5.0.26:5000/pointage", payload);
       }
 
       alert("Données sauvegardées avec succès !");

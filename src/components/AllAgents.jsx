@@ -38,7 +38,7 @@ const AllAgents = () => {
       name: "Action",
       options: {
         customBodyRender: (value) => (
-          <Link to={`/${value}`}>
+          <Link to={`/user/${value}`}>
             <p className='flex items-center justify-center gap-1 px-1 py-1 text-orange-500 font-semibold border border-orange-300 bg-orange-200 rounded-2xl'>
               <AiFillEye size={20} color='white' className='flex' /><span>Détails</span>
             </p>
@@ -97,7 +97,7 @@ const AllAgents = () => {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/entries')
+    fetch('http://10.5.0.26:5000/entries')
       .then((res) => res.json())
       .then((dataApi) => {
         setAgents(dataApi?.id);

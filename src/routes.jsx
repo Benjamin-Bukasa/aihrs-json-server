@@ -67,27 +67,27 @@ const routes = [
   { path: '/search-results', element: <AuthenticatedRoute element={<SearchResults />} /> },
   { path: '/add-user', element: <AdminRoute element={<AddUserPage />} /> },
   { 
-    path: '/:name',
+    path: 'user/:name',
     element: <UserRoute element={<User />} />,
     children:[
       {
-        path: '/:name',
+        path: '/user/:name',
         element: <Infos />,
       },
       {
-        path: '/:name/infos',
+        path: '/user/:name/infos',
         element: <Infos />,
       },
       {
-        path: '/:name/contract',
+        path: '/user/:name/contract',
         element: <Contract/>,
       },
       {
-        path: '/:name/pointage',
+        path: '/user/:name/pointage',
         element: '',
       },
       {
-        path: '/:name/report',
+        path: '/user/:name/report',
         element: '',
       },
       
@@ -95,27 +95,27 @@ const routes = [
   },
 
   { 
-    path: '/:clientName',
+    path: '/client/:clientName',
     element: <UserRoute element={<Client />} />,
     children:[
       {
-        path: '/:clientName',
-        element: <Client/>,
+        path: '/client/:clientName',
+        element: "Hello",
       },
       {
-        path: '/:clientName/infos',
-        element: <Client />,
+        path: '/client/:clientName/infos',
+        element: "Informations générales",
       },
       {
-        path: '/:clientName/contract',
-        element: <Client/>,
+        path: '/client/:clientName/contract',
+        element: "Contrat",
       },
       {
-        path: '/:clientName/stats',
-        element: '',
+        path: '/client/:clientName/stats',
+        element: 'Historique',
       },
       {
-        path: '/:clientName/report',
+        path: '/client/:clientName/report',
         element: '',
       },
     ]

@@ -39,7 +39,7 @@ const AllClients = () => {
       name: "Action",
       options: {
         customBodyRender: (value) => (
-          <Link to={`/${value}`}>
+          <Link to={`/client/${value}`}>
             <p className='flex items-center justify-center gap-1 px-1 py-1 text-white bg-orange-400 rounded-xl'>
               <AiFillEye size={20} color='white' className='flex' /><span>Détails</span>
             </p>
@@ -98,7 +98,7 @@ const AllClients = () => {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/clients')
+    fetch('http://10.5.0.26:5000/clients')
       .then((res) => res.json())
       .then((dataApi) => {
         setClients(dataApi?.id);
